@@ -124,8 +124,8 @@ export const View = () => {
                     />
                     <primitive
                         object={tableau.scene}
-                        scale={0.5}
-                        position={[1, 1.4, -4.7]}
+                        scale={0.7}
+                        position={[1, 1, -4.7]}
                         rotation={[0, 0, 0]}
                         onClick={(event) => {
                             //mettre la rotation de la caméra à 0
