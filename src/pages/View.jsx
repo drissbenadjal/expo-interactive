@@ -123,9 +123,10 @@ export const View = () => {
                         }}
                     />
                     <Interactive
-                        onHover={(event) => {
-                            console.log(event.target.scale)
-                            event.target.scale.set(1.2, 1.2, 1.2)
+                        onHover={() => {
+                            //scale le tableau
+                            tableau.scene.scale.set(0.72, 0.72, 0.72)
+                            tableau.scene.position.set(1, 1, -4)
                         }}
                     >
                         <primitive
