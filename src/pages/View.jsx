@@ -129,8 +129,8 @@ export const View = () => {
                             tableau.scene.position.set(1, 1, -4)
                         }}
 
-                        onUnhover={() => {
-                            console.log('unhover')
+                        onBlur={() => {
+                            //scale le tableau
                             tableau.scene.scale.set(0.7, 0.7, 0.7)
                             tableau.scene.position.set(1, 1, -4.7)
                         }}
