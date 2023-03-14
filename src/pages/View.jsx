@@ -128,6 +128,12 @@ export const View = () => {
                             tableau.scene.scale.set(0.72, 0.72, 0.72)
                             tableau.scene.position.set(1, 1, -4)
                         }}
+
+                        onUnhover={() => {
+                            console.log('unhover')
+                            tableau.scene.scale.set(0.7, 0.7, 0.7)
+                            tableau.scene.position.set(1, 1, -4.7)
+                        }}
                     >
                         <primitive
                             object={tableau.scene}
