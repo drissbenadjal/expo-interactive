@@ -1,7 +1,7 @@
 import React, { Suspense, useState, useRef, useEffect } from 'react'
 import { Canvas, useFrame, useLoader, extend, createRoot, events } from '@react-three/fiber'
 import { useGLTF, OrbitControls } from '@react-three/drei'
-import { VRButton, XR, Controllers, Hands, Interactive } from '@react-three/xr'
+import { VRButton, XR, Controllers, Hands, Interactive, RayGrab } from '@react-three/xr'
 import * as THREE from 'three'
 
 export const View = () => {
@@ -135,17 +135,19 @@ export const View = () => {
                             tableau.scene.position.set(1, 1, -4.7)
                         }}
                     >
-                        <primitive
-                            object={tableau.scene}
-                            scale={0.7}
-                            position={[1, 1, -4.7]}
-                            rotation={[0, 0, 0]}
-                            onClick={(event) => {
-                                //mettre la rotation de la caméra à 0
-                                event.camera.rotation.set(0, 0, 0)
-                                event.stopPropagation()
-                            }}
-                        />
+                        <RayGrab>
+                            <primitive
+                                object={tableau.scene}
+                                scale={0.7}
+                                position={[1, 1, -4.7]}
+                                rotation={[0, 0, 0]}
+                                onClick={(event) => {
+                                    //mettre la rotation de la caméra à 0
+                                    event.camera.rotation.set(0, 0, 0)
+                                    event.stopPropagation()
+                                }}
+                            />
+                        </RayGrab>
                     </Interactive>
                     <Controllers
                         rayMaterial={{ color: 'blue' }}
