@@ -1,7 +1,7 @@
 import React, { Suspense, useState, useRef, useEffect } from 'react'
 import { Canvas, useFrame, useLoader, extend, createRoot, events } from '@react-three/fiber'
 import { useGLTF, OrbitControls } from '@react-three/drei'
-import { VRButton, XR, Controllers, Hands, Interactive, RayGrab } from '@react-three/xr'
+import { VRButton, XR, Controllers, Hands, Interactive, RayGrab, useXR } from '@react-three/xr'
 import * as THREE from 'three'
 
 export const View = () => {
@@ -104,7 +104,8 @@ export const View = () => {
                     gl.shadowMap.type = THREE.PCFSoftShadowMap
                 }}
             >
-                <XR>
+                <XR
+                >
                     <Hands />
                     <boxGeometry />
                     <directionalLight castShadow position={[1, 2, 3]} intensity={2} />
