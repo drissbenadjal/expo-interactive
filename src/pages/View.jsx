@@ -12,6 +12,10 @@ export const View = () => {
 
     const LaNuitEtoilee = useGLTF('../assets/textures/LaNuitEtoilee.glb')
     const soleilLevant = useGLTF('../assets/textures/soleilLevant.glb')
+    const boulevardMontmartre = useGLTF('../assets/textures/boulevardMontmartre.glb')
+    const coucherdesoleilEragny = useGLTF('../assets/textures/coucherdesoleilEragny.glb')
+    const jardinMontmartre = useGLTF('../assets/textures/jardinMontmartre.glb')
+    const pontNeuf = useGLTF('../assets/textures/pontNeuf.glb')
 
     function Shader() {
         const ref = useRef()
@@ -109,13 +113,13 @@ export const View = () => {
                     <Interactive
                         onHover={() => {
                             //avance le tableau
-                            LaNuitEtoilee.scene.position.set(-2, 1.5, -4)
+                            LaNuitEtoilee.scene.position.set(-2, 1.5, -4.2)
                             audiotest.play()
                         }}
 
                         onBlur={() => {
                             //avance le tableau
-                            LaNuitEtoilee.scene.position.set(-2, 1.5, -4.6)
+                            LaNuitEtoilee.scene.position.set(-2, 1.5, -4.8)
                             audiotest.pause()
                         }}
                     >
@@ -123,15 +127,15 @@ export const View = () => {
                             <primitive
                                 object={LaNuitEtoilee.scene}
                                 scale={0.4}
-                                position={[-2, 1.5, -4.6]}
+                                position={[-2, 1.5, -4.8]}
                                 rotation={[0, 0, 0]}
                                 //quand on hover le tableau sa avance
                                 onPointerOver={(event) => {
-                                    LaNuitEtoilee.scene.position.set(-2, 1.5, -4)
+                                    LaNuitEtoilee.scene.position.set(-2, 1.5, -4.2)
                                     audiotest.play()
                                 }}
                                 onPointerOut={(event) => {
-                                    LaNuitEtoilee.scene.position.set(-2, 1.5, -4.6)
+                                    LaNuitEtoilee.scene.position.set(-2, 1.5, -4.8)
                                     audiotest.pause()
                                 }}
                                 onClick={(event) => {
@@ -144,13 +148,13 @@ export const View = () => {
                     <Interactive
                         onHover={() => {
                             //avance le tableau
-                            soleilLevant.scene.position.set(2, 1.5, -4)
+                            soleilLevant.scene.position.set(2, 1.5, -4.2)
                             audiotest.play()
                         }}
 
                         onBlur={() => {
                             //scale le tableau
-                            soleilLevant.scene.position.set(2, 1.5, -4.6)
+                            soleilLevant.scene.position.set(2, 1.5, -4.8)
                             audiotest.pause()
                         }}
                     >
@@ -158,15 +162,155 @@ export const View = () => {
                             <primitive
                                 object={soleilLevant.scene}
                                 scale={1.55}
-                                position={[2, 1.5, -4.6]}
+                                position={[2, 1.5, -4.8]}
                                 rotation={[0, 0, 0]}
                                 //quand on hover le tableau sa avance
                                 onPointerOver={(event) => {
-                                    soleilLevant.scene.position.set(2, 1.5, -4)
+                                    soleilLevant.scene.position.set(2, 1.5, -4.2)
                                     audiotest.play()
                                 }}
                                 onPointerOut={(event) => {
-                                    soleilLevant.scene.position.set(2, 1.5, -4.6)
+                                    soleilLevant.scene.position.set(2, 1.5, -4.8)
+                                    audiotest.pause()
+                                }}
+                                onClick={(event) => {
+                                    event.stopPropagation()
+                                }}
+                            />
+                        </RayGrab>
+                    </Interactive>
+                    <Interactive
+                        onHover={() => {
+                            //avance le tableau
+                            boulevardMontmartre.scene.position.set(4.2, 1.5, -2)
+                            audiotest.play()
+                        }}
+
+                        onBlur={() => {
+                            //scale le tableau
+                            boulevardMontmartre.scene.position.set(4.8, 1.5, -2)
+                            audiotest.pause()
+                        }}
+                    >
+                        <RayGrab>
+                            <primitive
+                                object={boulevardMontmartre.scene}
+                                scale={1.55}
+                                position={[4.8, 1.5, -2]}
+                                rotation={[0, 4.7, 0]}
+                                //quand on hover le tableau sa avance
+                                onPointerOver={(event) => {
+                                    boulevardMontmartre.scene.position.set(4.2, 1.5, -2)
+                                    audiotest.play()
+                                }}
+                                onPointerOut={(event) => {
+                                    boulevardMontmartre.scene.position.set(4.8, 1.5, -2)
+                                    audiotest.pause()
+                                }}
+                                onClick={(event) => {
+                                    event.stopPropagation()
+                                }}
+                            />
+                        </RayGrab>
+                    </Interactive>
+                    <Interactive
+                        onHover={() => {
+                            //avance le tableau
+                            coucherdesoleilEragny.scene.position.set(4.2, 1.5, 2)
+                            audiotest.play()
+                        }}
+
+                        onBlur={() => {
+                            //scale le tableau
+                            coucherdesoleilEragny.scene.position.set(4.8, 1.5, 2)
+                            audiotest.pause()
+                        }}
+                    >
+                        <RayGrab>
+                            <primitive
+
+                                object={coucherdesoleilEragny.scene}
+                                scale={1}
+
+                                position={[4.8, 1.5, 2]}
+                                rotation={[0, 4.7, 0]}
+                                //quand on hover le tableau sa avance
+                                onPointerOver={(event) => {
+                                    coucherdesoleilEragny.scene.position.set(4.2, 1.5, 2)
+                                    audiotest.play()
+                                }}
+                                onPointerOut={(event) => {
+                                    coucherdesoleilEragny.scene.position.set(4.8, 1.5, 2)
+                                    audiotest.pause()
+                                }}
+                                onClick={(event) => {
+                                    event.stopPropagation()
+                                }}
+                            />
+                        </RayGrab>
+                    </Interactive>
+                    <Interactive
+                        onHover={() => {
+                            //avance le tableau
+                            jardinMontmartre.scene.position.set(-4.2, 1.5, -2)
+                            audiotest.play()
+                        }}
+
+                        onBlur={() => {
+                            //scale le tableau
+                            jardinMontmartre.scene.position.set(-4.8, 1.5, -2)
+                            audiotest.pause()
+                        }}
+                    >
+                        <RayGrab>
+                            <primitive
+                                object={jardinMontmartre.scene}
+                                scale={1.28}
+                                position={[-4.8, 1.5, -2]}
+                                rotation={[0, -4.7, 0]}
+                                //quand on hover le tableau sa avance
+                                onPointerOver={(event) => {
+                                    jardinMontmartre.scene.position.set(-4.2, 1.5, -2)
+                                    audiotest.play()
+                                }}
+                                onPointerOut={(event) => {
+                                    jardinMontmartre.scene.position.set(-4.8, 1.5, -2)
+                                    audiotest.pause()
+                                }}
+                                onClick={(event) => {
+                                    event.stopPropagation()
+                                }}
+                            />
+                        </RayGrab>
+                    </Interactive>
+                    <Interactive
+                        onHover={() => {
+                            //avance le tableau
+                            pontNeuf.scene.position.set(-4.2, 1.5, 2)
+                            audiotest.play()
+                        }}
+
+                        onBlur={() => {
+                            //scale le tableau
+                            pontNeuf.scene.position.set(-4.8, 1.5, 2)
+                            audiotest.pause()
+                        }}
+                    >
+                        <RayGrab>
+                            <primitive
+
+                                object={pontNeuf.scene}
+                                scale={1}
+
+                                position={[-4.8, 1.5, 2]}
+                                rotation={[0, -4.7, 0]}
+                                //quand on hover le tableau sa avance
+                                onPointerOver={(event) => {
+                                    pontNeuf.scene.position.set(-4.2, 1.5, 2)
+                                    audiotest.play()
+                                }}
+                                onPointerOut={(event) => {
+                                    pontNeuf.scene.position.set(-4.8, 1.5, 2)
                                     audiotest.pause()
                                 }}
                                 onClick={(event) => {
