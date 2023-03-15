@@ -104,14 +104,14 @@ export const View = () => {
                     <Interactive
                         onHover={() => {
                             //scale le tableau
-                            tableau.scene.scale.set(0.62, 0.62, 0.62)
-                            tableau.scene.position.set(0, 1, -4)
+                            tableau.scene.scale.set(0.42, 0.42, 0.42)
+                            tableau.scene.position.set(0, 1.5, -4)
                         }}
 
                         onBlur={() => {
                             //scale le tableau
-                            tableau.scene.scale.set(0.6, 0.6, 0.6)
-                            tableau.scene.position.set(0, 1, -4.6)
+                            tableau.scene.scale.set(0.4, 0.4, 0.4)
+                            tableau.scene.position.set(0, 1.5, -4.6)
                         }}
                     >
                         <RayGrab>
