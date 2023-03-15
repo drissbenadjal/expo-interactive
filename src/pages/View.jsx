@@ -10,7 +10,7 @@ export const View = () => {
 
     const gallery = useGLTF('../assets/modeles/vr_gallery/scene.gltf')
 
-    const tableau = useGLTF('../assets/textures/nuitEtoile.glb')
+    const tableau = useGLTF('../assets/textures/LaNuitEtoilee.glb')
 
     function Shader() {
         const ref = useRef()
@@ -67,7 +67,7 @@ export const View = () => {
             <Canvas
                 gl={{ antialias: true }}
                 //zoomer la camera
-                camera={{ position: [0, 2, 0], fov: 70, rotation: [0, 0, 0] }}
+                camera={{ position: [0, 1.5, 0], fov: 70, rotation: [0, 0, 0] }}
                 onCreated={({ gl }) => {
                     gl.shadowMap.enabled = true
                     gl.shadowMap.type = THREE.PCFSoftShadowMap
@@ -78,7 +78,7 @@ export const View = () => {
                     {
                         //pointerlockcontrols
                         <PointerLockControls
-                            position={[0, 2, 0]}
+                            position={[0, 1.5, 0]}
                             rotation={[0, 0, 0]}
                             speed={0.05}
                             onLock={() => console.log('locked')}
@@ -104,28 +104,28 @@ export const View = () => {
                     <Interactive
                         onHover={() => {
                             //scale le tableau
-                            tableau.scene.scale.set(0.72, 0.72, 0.72)
-                            tableau.scene.position.set(1, 1, -4)
+                            tableau.scene.scale.set(0.62, 0.62, 0.62)
+                            tableau.scene.position.set(0, 1, -4)
                         }}
 
                         onBlur={() => {
                             //scale le tableau
-                            tableau.scene.scale.set(0.7, 0.7, 0.7)
-                            tableau.scene.position.set(1, 1, -4.6)
+                            tableau.scene.scale.set(0.6, 0.6, 0.6)
+                            tableau.scene.position.set(0, 1, -4.6)
                         }}
                     >
                         <RayGrab>
                             <primitive
                                 object={tableau.scene}
-                                scale={0.7}
-                                position={[1, 1, -4.6]}
+                                scale={0.4}
+                                position={[0, 1.5, -4.6]}
                                 rotation={[0, 0, 0]}
                                 //quand on hover le tableau sa avance
                                 onPointerOver={(event) => {
-                                    tableau.scene.position.set(1, 1, -4)
+                                    tableau.scene.position.set(0, 1.5, -4)
                                 }}
                                 onPointerOut={(event) => {
-                                    tableau.scene.position.set(1, 1, -4.6)
+                                    tableau.scene.position.set(0, 1.5, -4.6)
                                 }}
                             />
                         </RayGrab>
