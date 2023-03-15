@@ -10,7 +10,8 @@ export const View = () => {
 
     const gallery = useGLTF('../assets/modeles/vr_gallery/scene.gltf')
 
-    const tableau = useGLTF('../assets/textures/LaNuitEtoilee.glb')
+    const LaNuitEtoilee = useGLTF('../assets/textures/LaNuitEtoilee.glb')
+    const soleilLevant = useGLTF('../assets/textures/soleilLevant.glb')
 
     function Shader() {
         const ref = useRef()
@@ -107,38 +108,70 @@ export const View = () => {
                     />
                     <Interactive
                         onHover={() => {
-                            //scale le tableau
-                            tableau.scene.scale.set(0.42, 0.42, 0.42)
-                            tableau.scene.position.set(0, 1.5, -4)
+                            //avance le tableau
+                            LaNuitEtoilee.scene.position.set(-2, 1.5, -4)
                             audiotest.play()
                         }}
 
                         onBlur={() => {
-                            //scale le tableau
-                            tableau.scene.scale.set(0.4, 0.4, 0.4)
-                            tableau.scene.position.set(0, 1.5, -4.6)
+                            //avance le tableau
+                            LaNuitEtoilee.scene.position.set(-2, 1.5, -4.6)
                             audiotest.pause()
                         }}
                     >
                         <RayGrab>
                             <primitive
-                                object={tableau.scene}
+                                object={LaNuitEtoilee.scene}
                                 scale={0.4}
-                                position={[0, 1.5, -4.6]}
+                                position={[-2, 1.5, -4.6]}
                                 rotation={[0, 0, 0]}
                                 //quand on hover le tableau sa avance
                                 onPointerOver={(event) => {
-                                    tableau.scene.position.set(0, 1.5, -4)
+                                    LaNuitEtoilee.scene.position.set(-2, 1.5, -4)
                                     audiotest.play()
                                 }}
                                 onPointerOut={(event) => {
-                                    tableau.scene.position.set(0, 1.5, -4.6)
+                                    LaNuitEtoilee.scene.position.set(-2, 1.5, -4.6)
                                     audiotest.pause()
                                 }}
                                 onClick={(event) => {
                                     event.stopPropagation()
                                 }}
 
+                            />
+                        </RayGrab>
+                    </Interactive>
+                    <Interactive
+                        onHover={() => {
+                            //avance le tableau
+                            soleilLevant.scene.position.set(2, 1.5, -4)
+                            audiotest.play()
+                        }}
+
+                        onBlur={() => {
+                            //scale le tableau
+                            soleilLevant.scene.position.set(2, 1.5, -4.6)
+                            audiotest.pause()
+                        }}
+                    >
+                        <RayGrab>
+                            <primitive
+                                object={soleilLevant.scene}
+                                scale={1.55}
+                                position={[2, 1.5, -4.6]}
+                                rotation={[0, 0, 0]}
+                                //quand on hover le tableau sa avance
+                                onPointerOver={(event) => {
+                                    soleilLevant.scene.position.set(2, 1.5, -4)
+                                    audiotest.play()
+                                }}
+                                onPointerOut={(event) => {
+                                    soleilLevant.scene.position.set(2, 1.5, -4.6)
+                                    audiotest.pause()
+                                }}
+                                onClick={(event) => {
+                                    event.stopPropagation()
+                                }}
                             />
                         </RayGrab>
                     </Interactive>
