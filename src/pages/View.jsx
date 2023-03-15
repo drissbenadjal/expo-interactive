@@ -55,10 +55,25 @@ export const View = () => {
     }
 
     //play le son
-    function playSound(sound) {
-        const audio = new Audio('../assets/sounds/' + sound + '.mp3')
-        audio.play()
+    const [sound, setSound] = useState('')
+
+    const playSound = (sound) => {
+        setSound(sound)
     }
+
+    const stopSound = () => {
+        setSound('')
+    }
+
+    useEffect(() => {
+        const audio = new Audio('../assets/sounds/' + sound + '.mp3')
+        if (sound === 'test') {
+            audio.play()
+        } else {
+            audio.pause()
+        }
+    }, [sound])
+
 
     //utiliser pointerlockcontrols
     extend({ PointerLockControls })
@@ -122,6 +137,10 @@ export const View = () => {
                         onSelect={() => {
                             playSound('test')
                         }}
+
+                        onDeselect={() => {
+                            stopSound()
+                        }}
                     >
                         <RayGrab>
                             <primitive
@@ -135,10 +154,13 @@ export const View = () => {
                                 }}
                                 onPointerOut={(event) => {
                                     tableau.scene.position.set(0, 1.5, -4.6)
+                                    stopSound()
                                 }}
                                 onClick={(event) => {
                                     playSound('test')
+                                    event.stopPropagation()
                                 }}
+
                             />
                         </RayGrab>
                     </Interactive>
