@@ -1,54 +1,16 @@
 import React, { Suspense, useState, useRef, useEffect } from 'react'
 import { Canvas, useFrame, useLoader, extend, createRoot, events } from '@react-three/fiber'
-import { useGLTF, OrbitControls } from '@react-three/drei'
+import { useGLTF, PointerLockControls, OrbitControls } from '@react-three/drei'
 import { VRButton, XR, Controllers, Hands, Interactive, RayGrab, useXR } from '@react-three/xr'
 import * as THREE from 'three'
 
+import { CrossHair } from '../components/CrossHair/CrossHair'
+
 export const View = () => {
 
-    const gallery = useGLTF('../assets/modeles/Scene2/scene.gltf')
+    const gallery = useGLTF('../assets/modeles/vr_gallery/scene.gltf')
 
     const tableau = useGLTF('../assets/textures/nuitEtoile.glb')
-
-    function Controls() {
-        //quand on clique on met en mode requestPointerLock
-        const [active, setActive] = useState(false)
-        const ref = useRef()
-        useFrame(() => {
-            if (active) {
-                ref.current.update()
-            }
-        }
-        )
-        return (
-            <OrbitControls
-                ref={ref}
-                args={[active]}
-                enableDamping
-                dampingFactor={0.1}
-                rotateSpeed={0.5}
-                maxPolarAngle={Math.PI / 2.5}
-                minPolarAngle={Math.PI / 2.5}
-                maxAzimuthAngle={Math.PI / 0}
-                minAzimuthAngle={-Math.PI / 0}
-                enablePan={false}
-                enableZoom={false}
-                autoRotate={false}
-                autoRotateSpeed={0.5}
-                onClick={(event) => {
-                    event.stopPropagation()
-                }}
-                onPointerDown={(event) => {
-                    setActive(true)
-                    event.stopPropagation()
-                }}
-                onPointerUp={(event) => {
-                    setActive(false)
-                    event.stopPropagation()
-                }}
-            />
-        )
-    }
 
     function Shader() {
         const ref = useRef()
@@ -92,13 +54,20 @@ export const View = () => {
         )
     }
 
+
+    //utiliser pointerlockcontrols
+    extend({ PointerLockControls })
+
+
+
     return (
         <>
+            <CrossHair />
             <VRButton />
             <Canvas
                 gl={{ antialias: true }}
                 //zoomer la camera
-                camera={{ position: [5, 2, 0], fov: 70, rotation: [0, 0, 0] }}
+                camera={{ position: [0, 2, 0], fov: 70, rotation: [0, 0, 0] }}
                 onCreated={({ gl }) => {
                     gl.shadowMap.enabled = true
                     gl.shadowMap.type = THREE.PCFSoftShadowMap
@@ -106,11 +75,20 @@ export const View = () => {
             >
                 <XR
                 >
+                    {
+                        //pointerlockcontrols
+                        <PointerLockControls
+                            position={[0, 2, 0]}
+                            rotation={[0, 0, 0]}
+                            speed={0.05}
+                            onLock={() => console.log('locked')}
+                            onUnlock={() => console.log('unlocked')}
+                        />
+                    }
                     <Hands />
                     <boxGeometry />
                     <directionalLight castShadow position={[1, 2, 3]} intensity={2} />
                     <ambientLight intensity={0.5} />
-                    <Controls />
                     <primitive
                         object={gallery.scene}
                         scale={1}
@@ -133,19 +111,21 @@ export const View = () => {
                         onBlur={() => {
                             //scale le tableau
                             tableau.scene.scale.set(0.7, 0.7, 0.7)
-                            tableau.scene.position.set(1, 1, -4.7)
+                            tableau.scene.position.set(1, 1, -4.6)
                         }}
                     >
                         <RayGrab>
                             <primitive
                                 object={tableau.scene}
                                 scale={0.7}
-                                position={[1, 1, -4.7]}
+                                position={[1, 1, -4.6]}
                                 rotation={[0, 0, 0]}
-                                onClick={(event) => {
-                                    //mettre la rotation de la caméra à 0
-                                    event.camera.rotation.set(0, 0, 0)
-                                    event.stopPropagation()
+                                //quand on hover le tableau sa avance
+                                onPointerOver={(event) => {
+                                    tableau.scene.position.set(1, 1, -4)
+                                }}
+                                onPointerOut={(event) => {
+                                    tableau.scene.position.set(1, 1, -4.6)
                                 }}
                             />
                         </RayGrab>
