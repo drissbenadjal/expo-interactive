@@ -55,24 +55,8 @@ export const View = () => {
     }
 
     //play le son
-    const [sound, setSound] = useState('')
+    const audiotest = new Audio('../assets/sounds/test.mp3')
 
-    const playSound = (sound) => {
-        setSound(sound)
-    }
-
-    const stopSound = () => {
-        setSound('')
-    }
-
-    useEffect(() => {
-        const audio = new Audio('../assets/sounds/' + sound + '.mp3')
-        if (sound === 'test') {
-            audio.play()
-        } else {
-            audio.pause()
-        }
-    }, [sound])
 
 
     //utiliser pointerlockcontrols
@@ -126,20 +110,14 @@ export const View = () => {
                             //scale le tableau
                             tableau.scene.scale.set(0.42, 0.42, 0.42)
                             tableau.scene.position.set(0, 1.5, -4)
+                            audiotest.play()
                         }}
 
                         onBlur={() => {
                             //scale le tableau
                             tableau.scene.scale.set(0.4, 0.4, 0.4)
                             tableau.scene.position.set(0, 1.5, -4.6)
-                        }}
-
-                        onSelect={() => {
-                            playSound('test')
-                        }}
-
-                        onDeselect={() => {
-                            stopSound()
+                            audiotest.pause()
                         }}
                     >
                         <RayGrab>
@@ -151,13 +129,13 @@ export const View = () => {
                                 //quand on hover le tableau sa avance
                                 onPointerOver={(event) => {
                                     tableau.scene.position.set(0, 1.5, -4)
+                                    audiotest.play()
                                 }}
                                 onPointerOut={(event) => {
                                     tableau.scene.position.set(0, 1.5, -4.6)
-                                    stopSound()
+                                    audiotest.pause()
                                 }}
                                 onClick={(event) => {
-                                    playSound('test')
                                     event.stopPropagation()
                                 }}
 
