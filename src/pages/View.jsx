@@ -60,7 +60,15 @@ export const View = () => {
     }
 
     //play le son
-    const audiotest = new Audio('../assets/sounds/test.mp3')
+    useEffect(() => {
+        const audioambiance = new Audio('../assets/sounds/test.mp3')
+        //quand la souris a bouger on play le son
+        window.addEventListener('mousemove', () => {
+            audioambiance.play()
+            audioambiance.volume = 0.1
+        })
+    }, [])
+    const audiotest = new Audio('../assets/sounds/ds.mp3')
 
 
 
@@ -82,8 +90,7 @@ export const View = () => {
                     gl.shadowMap.type = THREE.PCFSoftShadowMap
                 }}
             >
-                <XR
-                >
+                <XR>
                     {
                         //pointerlockcontrols
                         <PointerLockControls
