@@ -45,7 +45,7 @@ export const View = () => {
         //quand la souris a bouger on play le son
         window.addEventListener('mousemove', () => {
             audioambiance.play()
-            audioambiance.volume = 0.1
+            audioambiance.volume = 0.2
         })
     }, [])
     const audiotest = new Audio('../assets/sounds/ds.mp3')
