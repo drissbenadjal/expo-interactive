@@ -56,7 +56,7 @@ export const View = () => {
 
     return (
         <>
-            <Loader loading={loading} />
+            {/* <Loader loading={loading} /> */}
             <CrossHair />
             <VRButton />
             <Canvas
