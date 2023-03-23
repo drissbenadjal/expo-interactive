@@ -170,7 +170,8 @@ export const View = () => {
 
 
     return (
-        <Suspense fallback={<Loader loading={loading} />}>
+        <Suspense fallback={null}>
+            <Loader loading={loading} />
             <CrossHair />
             <VRButton />
             <Canvas
