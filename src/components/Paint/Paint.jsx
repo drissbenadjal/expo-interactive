@@ -18,10 +18,13 @@ export const Paint = ({ name, basePosition, baseRotation, hoverPosition, clickPo
 
             onBlur={() => {
                 sound.pause()
-                paint.scene.position.set(basePosition.x, basePosition.y, basePosition.z);
+                zoom(paint.scene.position, basePosition.x, basePosition.y, basePosition.z);
+                rotate(paint.scene.rotation, baseRotation.x, baseRotation.y, baseRotation.z);
             }}
 
-            onClick={() => {
+            onSelectStart={() => {
+                rotate(paint.scene.rotation, clickRotation.x, clickRotation.y, clickRotation.z);
+                zoom(paint.scene.position, clickPosition.x, clickPosition.y, clickPosition.z);
                 sound.play()
             }}
         >
@@ -29,7 +32,8 @@ export const Paint = ({ name, basePosition, baseRotation, hoverPosition, clickPo
         <mesh
             position={[0, 1.5, -2]}
             rotation={[0, 0, 0]}
-            scale={[0.5, 0.5, 0.5]}
+            scale={0.2}
+            opacity={0.5}
             onClick={() => {
                 console.log('click')
             }}
