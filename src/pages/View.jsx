@@ -5,7 +5,6 @@ import { Canvas, useFrame, useLoader, extend, createRoot, events } from '@react-
 import { useGLTF, PointerLockControls, shaderMaterial, Sphere } from '@react-three/drei'
 import { VRButton, XR, Controllers, Hands, Interactive, RayGrab, useXR } from '@react-three/xr'
 import * as THREE from 'three'
-import { TextureLoader } from 'three/src/loaders/TextureLoader'
 
 import { Gallery } from '../components/Gallery/Gallery'
 import { CrossHair } from '../components/CrossHair/CrossHair'
@@ -70,14 +69,14 @@ export const View = () => {
                     gl.shadowMap.type = THREE.PCFSoftShadowMap
                 }}
             >
+                <PointerLockControls
+                    position={[0, 1.5, 0]}
+                    rotation={[0, 0, 0]}
+                    speed={0.05}
+                    onLock={() => console.log('locked')}
+                    onUnlock={() => console.log('unlocked')}
+                />
                 <XR>
-                    <PointerLockControls
-                        position={[0, 1.5, 0]}
-                        rotation={[0, 0, 0]}
-                        speed={0.05}
-                        onLock={() => console.log('locked')}
-                        onUnlock={() => console.log('unlocked')}
-                    />
                     <Hands />
                     <boxGeometry />
                     <directionalLight castShadow position={[1, 2, 3]} intensity={2} />
@@ -94,7 +93,7 @@ export const View = () => {
                         baseScale={0.5}
                         paint={laNuitEtoilee}
                     />
-                    
+
                     <Paint
                         name="soleilLevant"
                         basePosition={{ x: 2, y: 1.5, z: -4.8 }}
