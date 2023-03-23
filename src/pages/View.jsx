@@ -150,7 +150,7 @@ export const View = () => {
                     />
 
                     <Controllers
-                        rayMaterial={{ color: 'blue' }}
+                        rayMaterial={{ color: 'black' }}
                     />
                 </XR>
             </Canvas>

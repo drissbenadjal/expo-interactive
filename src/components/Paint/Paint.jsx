@@ -22,7 +22,7 @@ export const Paint = ({ name, basePosition, baseRotation, hoverPosition, clickPo
                 rotate(paint.scene.rotation, baseRotation.x, baseRotation.y, baseRotation.z);
             }}
 
-            onSelectStart={() => {
+            onSelect={() => {
                 rotate(paint.scene.rotation, clickRotation.x, clickRotation.y, clickRotation.z);
                 zoom(paint.scene.position, clickPosition.x, clickPosition.y, clickPosition.z);
                 sound.play()
