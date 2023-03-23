@@ -4,7 +4,7 @@ import { useGLTF } from '@react-three/drei';
 
 
 export const Paint = ({ name, basePosition, baseRotation, hoverPosition, clickPosition, clickRotation, baseScale, paint }) => {
-    
+
     const sound = new Audio(`./assets/sounds/${name}.mp3`);
 
     return (
@@ -22,7 +22,7 @@ export const Paint = ({ name, basePosition, baseRotation, hoverPosition, clickPo
                 sound.play()
             }}
         >
-            <RayGrab>
+            {/* <RayGrab> */}
                 <primitive
                     object={paint.scene}
                     scale={baseScale}
@@ -44,7 +44,7 @@ export const Paint = ({ name, basePosition, baseRotation, hoverPosition, clickPo
                         event.stopPropagation()
                     }}
                 />
-            </RayGrab>
+            {/* </RayGrab> */}
         </Interactive>
     )
 }

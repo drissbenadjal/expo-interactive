@@ -5,6 +5,7 @@ import { Canvas, useFrame, useLoader, extend, createRoot, events } from '@react-
 import { useGLTF, PointerLockControls, shaderMaterial, Sphere } from '@react-three/drei'
 import { VRButton, XR, Controllers, Hands, Interactive, RayGrab, useXR } from '@react-three/xr'
 import * as THREE from 'three'
+import { TextureLoader } from 'three/src/loaders/TextureLoader'
 
 import { Gallery } from '../components/Gallery/Gallery'
 import { CrossHair } from '../components/CrossHair/CrossHair'
@@ -15,8 +16,9 @@ export const View = () => {
 
     const [loading, setLoading] = useState(true)
 
-    // const playBtn = useLoader(THREE.ImageBitmapLoader, './assets/images/play.png');
-    // console.log();
+    //load une image png ave three
+    const playBtn = useLoader(TextureLoader, './assets/Images/Icons/play.png')
+    // console.log(playBtn);
 
     const gallery = useGLTF(`./assets/modeles/vr_gallery/scene.gltf`);
     const laNuitEtoilee = useGLTF(`./assets/textures/LaNuitEtoilee.glb`);
