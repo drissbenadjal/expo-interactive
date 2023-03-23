@@ -21,6 +21,7 @@ export const View = () => {
         window.addEventListener('click', () => {
             audioambiance.play()
             audioambiance.volume = 0.08
+            audioambiance.loop = true
         })
     }, [])
 
@@ -43,9 +44,6 @@ export const View = () => {
 
     //utiliser pointerlockcontrols
     extend({ PointerLockControls })
-
-
-
 
 
     // Animation
@@ -72,7 +70,8 @@ export const View = () => {
 
 
     return (
-        <Suspense fallback={<h1>test</h1>}>
+        <>
+        {/* <Suspense fallback={<h1>test</h1>}> */}
             {/* <Loader loading={loading} /> */}
             <CrossHair />
             <VRButton />
@@ -163,6 +162,7 @@ export const View = () => {
                     />
                 </XR>
             </Canvas>
-        </Suspense>
+        {/* </Suspense> */}
+        </>
     )
 }
