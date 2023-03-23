@@ -5,8 +5,8 @@ import { useGLTF } from '@react-three/drei';
 
 export const Paint = ({ name, basePosition, baseRotation, hoverPosition, clickPosition, clickRotation, baseScale }) => {
 
-    const paint = useGLTF(`../../assets/textures/${name}.glb`);
-    const sound = new Audio(`../../assets/sounds/${name}.mp3`);
+    const paint = useGLTF(`./assets/textures/${name}.glb`);
+    const sound = new Audio(`./assets/sounds/${name}.mp3`);
 
     return (
         <Interactive

@@ -35,7 +35,7 @@ void main() {
 extend({ ColorShiftMaterial })
 
 export const Gallery = () => {
-    const gallery = useGLTF('../../assets/modeles/vr_gallery/scene.gltf');
+    const gallery = useGLTF('./assets/modeles/vr_gallery/scene.gltf');
     // console.log(gallery.scene.children[0].children[0].children[0].children[0].children[0]);
     const mymaterial = useRef(null);
     useFrame((state, delta) => { (mymaterial.current.uTime += delta) })

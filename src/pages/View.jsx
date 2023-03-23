@@ -97,7 +97,7 @@ export const View = () => {
                     <ambientLight intensity={0.5} />
                     <Gallery />
 
-                    <Paint
+                    {/* <Paint
                         name="LaNuitEtoilee"
                         basePosition={{ x: -2, y: 1.5, z: -4.8 }}
                         baseRotation={{ x: 0, y: 0, z: 0 }}
@@ -155,7 +155,7 @@ export const View = () => {
                         clickPosition={{ x: -3, y: 1.5, z: 2 }}
                         clickRotation={{ x: 0, y: -4.2, z: 0 }}
                         baseScale={1}
-                    />
+                    /> */}
 
                     <Controllers
                         rayMaterial={{ color: 'blue' }}
