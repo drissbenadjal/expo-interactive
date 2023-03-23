@@ -15,6 +15,16 @@ export const View = () => {
 
     const [loading, setLoading] = useState(false)
 
+    const gallery = useGLTF(`./assets/modeles/vr_gallery/scene.gltf`);
+    const laNuitEtoilee = useGLTF(`./assets/textures/LaNuitEtoilee.glb`);
+    const soleilLevant = useGLTF(`./assets/textures/soleilLevant.glb`);
+    const boulevardMontmartre = useGLTF(`./assets/textures/boulevardMontmartre.glb`);
+    const coucherdesoleilEragny = useGLTF(`./assets/textures/coucherdesoleilEragny.glb`);
+    const jardinMontmartre = useGLTF(`./assets/textures/jardinMontmartre.glb`);
+    const pontNeuf = useGLTF(`./assets/textures/pontNeuf.glb`);
+
+
+
     //play le son
     useEffect(() => {
         const audioambiance = new Audio('../assets/sounds/ambiance.mp3')
@@ -71,7 +81,7 @@ export const View = () => {
 
     return (
         <>
-        {/* <Suspense fallback={<h1>test</h1>}> */}
+            {/* <Suspense fallback={<h1>test</h1>}> */}
             {/* <Loader loading={loading} /> */}
             <CrossHair />
             <VRButton />
@@ -95,9 +105,9 @@ export const View = () => {
                     <boxGeometry />
                     <directionalLight castShadow position={[1, 2, 3]} intensity={2} />
                     <ambientLight intensity={0.5} />
-                    <Gallery />
+                    <Gallery modele={gallery} />
 
-                    {/* <Paint
+                    <Paint
                         name="LaNuitEtoilee"
                         basePosition={{ x: -2, y: 1.5, z: -4.8 }}
                         baseRotation={{ x: 0, y: 0, z: 0 }}
@@ -105,8 +115,9 @@ export const View = () => {
                         clickPosition={{ x: -2, y: 1.5, z: -3 }}
                         clickRotation={{ x: 0, y: 0.5, z: 0 }}
                         baseScale={0.5}
+                        paint={laNuitEtoilee}
                     />
-
+                    
                     <Paint
                         name="soleilLevant"
                         basePosition={{ x: 2, y: 1.5, z: -4.8 }}
@@ -115,6 +126,7 @@ export const View = () => {
                         clickPosition={{ x: 2, y: 1.5, z: -3 }}
                         clickRotation={{ x: 0, y: -0.5, z: 0 }}
                         baseScale={1.93}
+                        paint={soleilLevant}
                     />
 
                     <Paint
@@ -125,6 +137,7 @@ export const View = () => {
                         clickPosition={{ x: 3, y: 1.5, z: -2 }}
                         clickRotation={{ x: 0, y: 5.2, z: 0 }}
                         baseScale={1.55}
+                        paint={boulevardMontmartre}
                     />
 
                     <Paint
@@ -135,6 +148,7 @@ export const View = () => {
                         clickPosition={{ x: 3, y: 1.5, z: 2 }}
                         clickRotation={{ x: 0, y: 4.2, z: 0 }}
                         baseScale={1}
+                        paint={coucherdesoleilEragny}
                     />
 
                     <Paint
@@ -145,6 +159,7 @@ export const View = () => {
                         clickPosition={{ x: -3, y: 1.5, z: -2 }}
                         clickRotation={{ x: 0, y: -5.2, z: 0 }}
                         baseScale={1.28}
+                        paint={jardinMontmartre}
                     />
 
                     <Paint
@@ -155,14 +170,15 @@ export const View = () => {
                         clickPosition={{ x: -3, y: 1.5, z: 2 }}
                         clickRotation={{ x: 0, y: -4.2, z: 0 }}
                         baseScale={1}
-                    /> */}
+                        paint={pontNeuf}
+                    />
 
                     <Controllers
                         rayMaterial={{ color: 'blue' }}
                     />
                 </XR>
             </Canvas>
-        {/* </Suspense> */}
+            {/* </Suspense> */}
         </>
     )
 }

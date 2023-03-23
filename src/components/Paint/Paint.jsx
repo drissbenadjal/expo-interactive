@@ -3,9 +3,8 @@ import { zoom, rotate } from '../Animations/Animations';
 import { useGLTF } from '@react-three/drei';
 
 
-export const Paint = ({ name, basePosition, baseRotation, hoverPosition, clickPosition, clickRotation, baseScale }) => {
-
-    const paint = useGLTF(`./assets/textures/${name}.glb`);
+export const Paint = ({ name, basePosition, baseRotation, hoverPosition, clickPosition, clickRotation, baseScale, paint }) => {
+    
     const sound = new Audio(`./assets/sounds/${name}.mp3`);
 
     return (

@@ -34,8 +34,7 @@ void main() {
 )
 extend({ ColorShiftMaterial })
 
-export const Gallery = () => {
-    const gallery = useGLTF('./assets/modeles/vr_gallery/scene.gltf');
+export const Gallery = ({ modele }) => {
     // console.log(gallery.scene.children[0].children[0].children[0].children[0].children[0]);
     const mymaterial = useRef(null);
     useFrame((state, delta) => { (mymaterial.current.uTime += delta) })
@@ -48,7 +47,7 @@ export const Gallery = () => {
                     </Sphere>
                 </mesh> */}
             <primitive
-                object={gallery.scene}
+                object={modele.scene}
                 scale={1}
                 position={[0, 0, 0]}
                 rotation={[0, 0, 0]}
