@@ -16,10 +16,6 @@ export const View = () => {
 
     const [loading, setLoading] = useState(true)
 
-    //load une image png ave three
-    const playBtn = useLoader(TextureLoader, './assets/Images/Icons/play.png')
-    // console.log(playBtn);
-
     const gallery = useGLTF(`./assets/modeles/vr_gallery/scene.gltf`);
     const laNuitEtoilee = useGLTF(`./assets/textures/LaNuitEtoilee.glb`);
     const soleilLevant = useGLTF(`./assets/textures/soleilLevant.glb`);

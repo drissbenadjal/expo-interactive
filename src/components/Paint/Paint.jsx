@@ -1,10 +1,13 @@
 import { Interactive, RayGrab } from '@react-three/xr';
 import { zoom, rotate } from '../Animations/Animations';
 import { useGLTF } from '@react-three/drei';
+import { useLoader } from '@react-three/fiber';
+import { TextureLoader } from 'three/src/loaders/TextureLoader'
 
 
 export const Paint = ({ name, basePosition, baseRotation, hoverPosition, clickPosition, clickRotation, baseScale, paint }) => {
 
+    const playBtn = useLoader(TextureLoader, './assets/Images/Icons/play.png')
     const sound = new Audio(`./assets/sounds/${name}.mp3`);
 
     return (
@@ -14,7 +17,7 @@ export const Paint = ({ name, basePosition, baseRotation, hoverPosition, clickPo
             }}
 
             onBlur={() => {
-                paint.pause()
+                sound.pause()
                 paint.scene.position.set(basePosition.x, basePosition.y, basePosition.z);
             }}
 
@@ -22,6 +25,18 @@ export const Paint = ({ name, basePosition, baseRotation, hoverPosition, clickPo
                 sound.play()
             }}
         >
+
+        <mesh
+            position={[0, 1.5, -2]}
+            rotation={[0, 0, 0]}
+            scale={[0.5, 0.5, 0.5]}
+            onClick={() => {
+                console.log('click')
+            }}
+        >
+            <planeGeometry args={[1, 1]} />
+            <meshBasicMaterial map={playBtn} />
+        </mesh>
             {/* <RayGrab> */}
                 <primitive
                     object={paint.scene}
