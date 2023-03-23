@@ -6,20 +6,22 @@ export const Loader = ({ loading }) => {
     const loaderBottomRef = useRef(null);
 
     //recuperer le pourcentage de combien la page est chargé
-    
-    if (!loading) {
-        //faire une transition qui fais baisser la height du loader
-        for (let i = 0; i < 51; i++) {
-            setTimeout(() => {
-                loaderTopRef.current.style.height = `${50 - i}vh`;
-            }, i * 6);
+
+    useEffect(() => {
+        if (!loading) {
+            //faire une transition qui fais baisser la height du loader
+            for (let i = 0; i < 51; i++) {
+                setTimeout(() => {
+                    loaderTopRef.current.style.height = `${50 - i}vh`;
+                }, i * 6);
+            }
+            for (let i = 0; i < 60; i++) {
+                setTimeout(() => {
+                    loaderBottomRef.current.style.height = `${50 - i}vh`;
+                }, i * 6);
+            }
         }
-        for (let i = 0; i < 60; i++) {
-            setTimeout(() => {
-                loaderBottomRef.current.style.height = `${50 - i}vh`;
-            }, i * 6);
-        }
-    }
+    }, [loading]);
 
     return (
         <div className="loader">

@@ -9,7 +9,7 @@ import * as THREE from 'three'
 import { Gallery } from '../components/Gallery/Gallery'
 import { CrossHair } from '../components/CrossHair/CrossHair'
 import { Paint } from '../components/Paint/Paint'
-// import { Loader } from '../components/Loader/Loader'
+import { Loader } from '../components/Loader/Loader'
 
 export const View = () => {
 
@@ -23,8 +23,6 @@ export const View = () => {
     const jardinMontmartre = useGLTF(`./assets/textures/jardinMontmartre.glb`);
     const pontNeuf = useGLTF(`./assets/textures/pontNeuf.glb`);
 
-
-
     //play le son
     useEffect(() => {
         const audioambiance = new Audio('../assets/sounds/ambiance.mp3')
@@ -35,22 +33,22 @@ export const View = () => {
         })
     }, [])
 
-    //quand tout les gltf sont chargé on enleve le loading
-    // useEffect(() => {
-    //     if (
-    //         gallery &&
-    //         LaNuitEtoilee &&
-    //         soleilLevant &&
-    //         boulevardMontmartre &&
-    //         coucherdesoleilEragny &&
-    //         jardinMontmartre &&
-    //         pontNeuf
-    //     ) {
-    //         setTimeout(() => {
-    //             setLoading(false)
-    //         }, 1000)
-    //     }
-    // }, [gallery, LaNuitEtoilee, soleilLevant, boulevardMontmartre, coucherdesoleilEragny, jardinMontmartre, pontNeuf])
+    // quand tout les gltf sont chargé on enleve le loading
+    useEffect(() => {
+        if (
+            gallery &&
+            laNuitEtoilee &&
+            soleilLevant &&
+            boulevardMontmartre &&
+            coucherdesoleilEragny &&
+            jardinMontmartre &&
+            pontNeuf
+        ) {
+            setTimeout(() => {
+                setLoading(false)
+            }, 1000)
+        }
+    }, [gallery, laNuitEtoilee, soleilLevant, boulevardMontmartre, coucherdesoleilEragny, jardinMontmartre, pontNeuf])
 
     //utiliser pointerlockcontrols
     extend({ PointerLockControls })
@@ -82,7 +80,7 @@ export const View = () => {
     return (
         <>
             {/* <Suspense fallback={<h1>test</h1>}> */}
-            {/* <Loader loading={loading} /> */}
+            <Loader loading={loading} />
             <CrossHair />
             <VRButton />
             <Canvas
