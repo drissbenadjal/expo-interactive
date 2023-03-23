@@ -1,12 +1,13 @@
 
-import { Loader } from '../components/CrossHair/Loader/Loader'
+import { Loader } from '../components/Loader/Loader'
 
-import React, { Suspense, useState, useRef, useEffect } from 'react'
+import React, { Suspense, useState, useRef, useEffect, useLayoutEffect } from 'react'
 import { Canvas, useFrame, useLoader, extend, createRoot, events } from '@react-three/fiber'
 import { useGLTF, PointerLockControls, shaderMaterial, Sphere } from '@react-three/drei'
 import { VRButton, XR, Controllers, Hands, Interactive, RayGrab, useXR } from '@react-three/xr'
 import * as THREE from 'three'
 import glsl from 'babel-plugin-glsl/macro'
+import { gsap } from "gsap";
 
 import { CrossHair } from '../components/CrossHair/CrossHair'
 
@@ -14,42 +15,7 @@ export const View = () => {
 
     const [loading, setLoading] = useState(true)
 
-    const gallery = useGLTF('../assets/modeles/vr_gallery/scene.gltf')
 
-    const LaNuitEtoilee = useGLTF('../assets/textures/LaNuitEtoilee.glb')
-    const soleilLevant = useGLTF('../assets/textures/soleilLevant.glb')
-    const boulevardMontmartre = useGLTF('../assets/textures/boulevardMontmartre.glb')
-    const coucherdesoleilEragny = useGLTF('../assets/textures/coucherdesoleilEragny.glb')
-    const jardinMontmartre = useGLTF('../assets/textures/jardinMontmartre.glb')
-    const pontNeuf = useGLTF('../assets/textures/pontNeuf.glb')
-
-    //quand tout les gltf sont chargé on enleve le loading
-    useEffect(() => {
-        if (
-            gallery &&
-            LaNuitEtoilee &&
-            soleilLevant &&
-            boulevardMontmartre &&
-            coucherdesoleilEragny &&
-            jardinMontmartre &&
-            pontNeuf
-        ) {
-            setTimeout(() => {
-                setLoading(false)
-            }, 1000)
-        }
-    }, [gallery, LaNuitEtoilee, soleilLevant, boulevardMontmartre, coucherdesoleilEragny, jardinMontmartre, pontNeuf])
-
-    //play le son
-    useEffect(() => {
-        const audioambiance = new Audio('../assets/sounds/test.mp3')
-        //quand la souris a bouger on play le son
-        window.addEventListener('click', () => {
-            audioambiance.play()
-            audioambiance.volume = 0.2
-        })
-    }, [])
-    const audiotest = new Audio('../assets/sounds/ds.mp3')
 
     const ColorShiftMaterial = shaderMaterial(
         { uTime: 0, uColorStart: new THREE.Color('lightBlue'), uColorEnd: new THREE.Color('white') },
@@ -79,9 +45,59 @@ export const View = () => {
             gl_FragColor = vec4(color, 1.0);
         }`,
     )
-
-    // declaratively
     extend({ ColorShiftMaterial })
+
+    const gallery = useGLTF('../assets/modeles/vr_gallery/scene.gltf')
+    // console.log(gallery.scene.children[0].children[0].children[0].children[0].children[0]);
+
+    //chargement des gltf
+    const LaNuitEtoilee = useGLTF('../assets/textures/LaNuitEtoilee.glb')
+    const soleilLevant = useGLTF('../assets/textures/soleilLevant.glb')
+    const boulevardMontmartre = useGLTF('../assets/textures/boulevardMontmartre.glb')
+    const coucherdesoleilEragny = useGLTF('../assets/textures/coucherdesoleilEragny.glb')
+    const jardinMontmartre = useGLTF('../assets/textures/jardinMontmartre.glb')
+    const pontNeuf = useGLTF('../assets/textures/pontNeuf.glb')
+
+    //chargement des sons
+    const boulevardMontmartreSound = new Audio('../assets/sounds/Boulevard_Montmartre.mp3');
+    const coucherdesoleilEragnySound = new Audio('../assets/sounds/Coucher_du_soleil_a_Eragny.mp3');
+    const jardinMontmartreSound = new Audio('../assets/sounds/Un_jardin_a_montmartre.mp3');
+    const LaNuitEtoileeSound = new Audio('../assets/sounds/La_Nuit_Etoilee.mp3');
+    const pontNeufSound = new Audio('../assets/sounds/Pont_Neuf.mp3');
+    const soleilLevantSound = new Audio('../assets/sounds/Impression_Soleil_Levant.mp3');
+
+
+    //play le son
+    useEffect(() => {
+        const tableauSon = [boulevardMontmartreSound, coucherdesoleilEragnySound, jardinMontmartreSound, LaNuitEtoileeSound, pontNeufSound, soleilLevantSound]
+        const audioambiance = new Audio('../assets/sounds/ambiance.mp3')
+        window.addEventListener('click', () => {
+            audioambiance.play()
+            audioambiance.volume = 0.08
+        })
+        //mettre tout les audio en loop
+        tableauSon.forEach((audio) => {
+            audio.loop = true
+        })
+    }, [])
+
+
+    //quand tout les gltf sont chargé on enleve le loading
+    useEffect(() => {
+        if (
+            gallery &&
+            LaNuitEtoilee &&
+            soleilLevant &&
+            boulevardMontmartre &&
+            coucherdesoleilEragny &&
+            jardinMontmartre &&
+            pontNeuf
+        ) {
+            setTimeout(() => {
+                setLoading(false)
+            }, 1000)
+        }
+    }, [gallery, LaNuitEtoilee, soleilLevant, boulevardMontmartre, coucherdesoleilEragny, jardinMontmartre, pontNeuf])
 
     //utiliser pointerlockcontrols
     extend({ PointerLockControls })
@@ -89,18 +105,72 @@ export const View = () => {
     function Model(props) {
         const mymaterial = useRef(null);
         useFrame((state, delta) => { (mymaterial.current.uTime += delta) })
+        // gallery.scene.children[0].children[0].children[0].children[0].children[0].material
         return (
-            <mesh>
-                <Sphere position={[0, 1.3, 4]} scale={1}>
-                    <colorShiftMaterial ref={mymaterial} time={1} />
-                </Sphere>
-            </mesh>
+            <>
+                {/* <mesh>
+                    <Sphere position={[0, 1.3, 4]} scale={1}>
+                        <colorShiftMaterial ref={mymaterial} time={1} />
+                    </Sphere>
+                </mesh> */}
+                <primitive
+                    object={gallery.scene}
+                    scale={1}
+                    position={[0, 0, 0]}
+                    rotation={[0, 0, 0]}
+                    onCreated={() => {
+                        console.log("event");
+                    }}
+                    onClick={(event) => {
+                        // console.log(event.object.name)
+                        // console.log(event.eventObject)
+                        // console.log(event.object)
+                        // event.stopPropagation()
+                    }}
+                >
+                        <colorShiftMaterial ref={mymaterial} time={1} />
+                </primitive>
+            </>
         )
     }
 
+    const zoom = (target, x, y, z) => {
+        gsap.to(target, { x: x, y: y, z: z })
+    }
+
+    const rotate = (target, x, y, z) => {
+        gsap.to(target, { x: x, y: y, z: z })
+    }
+    
+        
+
+
+
+    // Animation
+    //     const comp = useRef(); // create a ref for the root level element (for scoping)
+    //     const circle = useRef();
+
+    //     useLayoutEffect(() => {
+
+    //   // create our context. This function is invoked immediately and all GSAP animations and ScrollTriggers created during the execution of this function get recorded so we can revert() them later (cleanup)
+    //   let ctx = gsap.context(() => {
+
+    //     // Our animations can use selector text like ".box" 
+    //     // this will only select '.box' elements that are children of the component
+    //     gsap.to(".box", {});
+    //     // or we can use refs
+    //     gsap.to(circle.current, { rotation: 360 });
+
+    //   }, comp); // <- IMPORTANT! Scopes selector text
+
+    //   return () => ctx.revert(); // cleanup
+
+    // }, []); // <- empty dependency Array so it doesn't re-run on every render
+
+
+
     return (
-        <>
-            {/* <Loader loading={loading} /> */}
+        <Suspense fallback={<Loader loading={loading} />}>
             <CrossHair />
             <VRButton />
             <Canvas
@@ -127,29 +197,19 @@ export const View = () => {
                     <directionalLight castShadow position={[1, 2, 3]} intensity={2} />
                     <ambientLight intensity={0.5} />
                     <Model />
-                    <primitive
-                        object={gallery.scene}
-                        scale={1}
-                        position={[0, 0, 0]}
-                        rotation={[0, 0, 0]}
-                        onClick={(event) => {
-                            // console.log(event.object.name)
-                            // console.log(event.eventObject)
-                            // console.log(event.object)
-                            // event.stopPropagation()
-                        }}
-                    />
                     <Interactive
                         onHover={() => {
-                            //avance le tableau
-                            LaNuitEtoilee.scene.position.set(-2, 1.5, -4.2)
-                            audiotest.play()
+                            // LaNuitEtoilee.scene.position.set(-2, 1.5, -4.2)
+
                         }}
 
                         onBlur={() => {
-                            //avance le tableau
+                            LaNuitEtoileeSound.pause()
                             LaNuitEtoilee.scene.position.set(-2, 1.5, -4.8)
-                            audiotest.pause()
+                        }}
+
+                        onClick={() => {
+                            LaNuitEtoileeSound.play()
                         }}
                     >
                         <RayGrab>
@@ -158,16 +218,20 @@ export const View = () => {
                                 scale={0.5}
                                 position={[-2, 1.5, -4.8]}
                                 rotation={[0, 0, 0]}
-                                //quand on hover le tableau sa avance
                                 onPointerOver={(event) => {
-                                    LaNuitEtoilee.scene.position.set(-2, 1.5, -4.2)
-                                    audiotest.play()
+                                    zoom(LaNuitEtoilee.scene.position, -2, 1.5, -4.2);
+
                                 }}
                                 onPointerOut={(event) => {
-                                    LaNuitEtoilee.scene.position.set(-2, 1.5, -4.8)
-                                    audiotest.pause()
+                                    LaNuitEtoileeSound.pause()
+                                    zoom(LaNuitEtoilee.scene.position, -2, 1.5, -4.8);
+                                    rotate(LaNuitEtoilee.scene.rotation, 0, 0, 0);
+
                                 }}
                                 onClick={(event) => {
+                                    rotate(LaNuitEtoilee.scene.rotation, 0, 0.5, 0);
+                                    zoom(LaNuitEtoilee.scene.position, -2, 1.5, -3);
+                                    LaNuitEtoileeSound.play()
                                     event.stopPropagation()
                                 }}
                             />
@@ -175,15 +239,16 @@ export const View = () => {
                     </Interactive>
                     <Interactive
                         onHover={() => {
-                            //avance le tableau
                             soleilLevant.scene.position.set(2, 1.5, -4.2)
-                            audiotest.play()
                         }}
 
                         onBlur={() => {
-                            //scale le tableau
+                            soleilLevantSound.pause()
                             soleilLevant.scene.position.set(2, 1.5, -4.8)
-                            audiotest.pause()
+                        }}
+
+                        onClick={() => {
+                            soleilLevantSound.play()
                         }}
                     >
                         <RayGrab>
@@ -192,16 +257,15 @@ export const View = () => {
                                 scale={1.93}
                                 position={[2, 1.5, -4.8]}
                                 rotation={[0, 0, 0]}
-                                //quand on hover le tableau sa avance
                                 onPointerOver={(event) => {
                                     soleilLevant.scene.position.set(2, 1.5, -4.2)
-                                    audiotest.play()
                                 }}
                                 onPointerOut={(event) => {
+                                    soleilLevantSound.pause()
                                     soleilLevant.scene.position.set(2, 1.5, -4.8)
-                                    audiotest.pause()
                                 }}
                                 onClick={(event) => {
+                                    soleilLevantSound.play()
                                     event.stopPropagation()
                                 }}
                             />
@@ -209,15 +273,16 @@ export const View = () => {
                     </Interactive>
                     <Interactive
                         onHover={() => {
-                            //avance le tableau
                             boulevardMontmartre.scene.position.set(4.2, 1.5, -2)
-                            audiotest.play()
                         }}
 
                         onBlur={() => {
-                            //scale le tableau
+                            boulevardMontmartreSound.pause()
                             boulevardMontmartre.scene.position.set(4.8, 1.5, -2)
-                            audiotest.pause()
+                        }}
+
+                        onClick={() => {
+                            boulevardMontmartreSound.play()
                         }}
                     >
                         <RayGrab>
@@ -226,16 +291,15 @@ export const View = () => {
                                 scale={1.55}
                                 position={[4.8, 1.5, -2]}
                                 rotation={[0, 4.7, 0]}
-                                //quand on hover le tableau sa avance
                                 onPointerOver={(event) => {
                                     boulevardMontmartre.scene.position.set(4.2, 1.5, -2)
-                                    audiotest.play()
                                 }}
                                 onPointerOut={(event) => {
+                                    boulevardMontmartreSound.pause()
                                     boulevardMontmartre.scene.position.set(4.8, 1.5, -2)
-                                    audiotest.pause()
                                 }}
                                 onClick={(event) => {
+                                    boulevardMontmartreSound.play()
                                     event.stopPropagation()
                                 }}
                             />
@@ -243,15 +307,16 @@ export const View = () => {
                     </Interactive>
                     <Interactive
                         onHover={() => {
-                            //avance le tableau
                             coucherdesoleilEragny.scene.position.set(4.2, 1.5, 2)
-                            audiotest.play()
                         }}
 
                         onBlur={() => {
-                            //scale le tableau
+                            coucherdesoleilEragnySound.pause()
                             coucherdesoleilEragny.scene.position.set(4.8, 1.5, 2)
-                            audiotest.pause()
+                        }}
+
+                        onClick={() => {
+                            coucherdesoleilEragnySound.play()
                         }}
                     >
                         <RayGrab>
@@ -262,16 +327,16 @@ export const View = () => {
 
                                 position={[4.8, 1.5, 2]}
                                 rotation={[0, 4.7, 0]}
-                                //quand on hover le tableau sa avance
+
                                 onPointerOver={(event) => {
                                     coucherdesoleilEragny.scene.position.set(4.2, 1.5, 2)
-                                    audiotest.play()
                                 }}
                                 onPointerOut={(event) => {
+                                    coucherdesoleilEragnySound.pause()
                                     coucherdesoleilEragny.scene.position.set(4.8, 1.5, 2)
-                                    audiotest.pause()
                                 }}
                                 onClick={(event) => {
+                                    coucherdesoleilEragnySound.play()
                                     event.stopPropagation()
                                 }}
                             />
@@ -279,15 +344,16 @@ export const View = () => {
                     </Interactive>
                     <Interactive
                         onHover={() => {
-                            //avance le tableau
                             jardinMontmartre.scene.position.set(-4.2, 1.5, -2)
-                            audiotest.play()
                         }}
 
                         onBlur={() => {
-                            //scale le tableau
+                            jardinMontmartreSound.pause()
                             jardinMontmartre.scene.position.set(-4.8, 1.5, -2)
-                            audiotest.pause()
+                        }}
+
+                        onClick={() => {
+                            jardinMontmartreSound.play()
                         }}
                     >
                         <RayGrab>
@@ -296,16 +362,15 @@ export const View = () => {
                                 scale={1.28}
                                 position={[-4.8, 1.5, -2]}
                                 rotation={[0, -4.7, 0]}
-                                //quand on hover le tableau sa avance
                                 onPointerOver={(event) => {
                                     jardinMontmartre.scene.position.set(-4.2, 1.5, -2)
-                                    audiotest.play()
                                 }}
                                 onPointerOut={(event) => {
+                                    jardinMontmartreSound.pause()
                                     jardinMontmartre.scene.position.set(-4.8, 1.5, -2)
-                                    audiotest.pause()
                                 }}
                                 onClick={(event) => {
+                                    jardinMontmartreSound.play()
                                     event.stopPropagation()
                                 }}
                             />
@@ -313,15 +378,16 @@ export const View = () => {
                     </Interactive>
                     <Interactive
                         onHover={() => {
-                            //avance le tableau
                             pontNeuf.scene.position.set(-4.2, 1.5, 2)
-                            audiotest.play()
                         }}
 
                         onBlur={() => {
-                            //scale le tableau
+                            pontNeufSound.pause()
                             pontNeuf.scene.position.set(-4.8, 1.5, 2)
-                            audiotest.pause()
+                        }}
+
+                        onClick={() => {
+                            pontNeufSound.play()
                         }}
                     >
                         <RayGrab>
@@ -332,16 +398,16 @@ export const View = () => {
 
                                 position={[-4.8, 1.5, 2]}
                                 rotation={[0, -4.7, 0]}
-                                //quand on hover le tableau sa avance
+                                //faut tu fasses l'animation dans les truc normaux et les truc interactif
                                 onPointerOver={(event) => {
                                     pontNeuf.scene.position.set(-4.2, 1.5, 2)
-                                    audiotest.play()
                                 }}
                                 onPointerOut={(event) => {
+                                    pontNeufSound.pause()
                                     pontNeuf.scene.position.set(-4.8, 1.5, 2)
-                                    audiotest.pause()
                                 }}
                                 onClick={(event) => {
+                                    pontNeufSound.play()
                                     event.stopPropagation()
                                 }}
                             />
@@ -352,6 +418,6 @@ export const View = () => {
                     />
                 </XR>
             </Canvas>
-        </>
+        </Suspense>
     )
 }
