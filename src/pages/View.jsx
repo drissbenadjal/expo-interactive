@@ -1,148 +1,50 @@
-
-import { Loader } from '../components/Loader/Loader'
+import '../index.css'
 
 import React, { Suspense, useState, useRef, useEffect, useLayoutEffect } from 'react'
 import { Canvas, useFrame, useLoader, extend, createRoot, events } from '@react-three/fiber'
 import { useGLTF, PointerLockControls, shaderMaterial, Sphere } from '@react-three/drei'
 import { VRButton, XR, Controllers, Hands, Interactive, RayGrab, useXR } from '@react-three/xr'
 import * as THREE from 'three'
-import glsl from 'babel-plugin-glsl/macro'
-import { gsap } from "gsap";
 
+import { Gallery } from '../components/Gallery/Gallery'
 import { CrossHair } from '../components/CrossHair/CrossHair'
+import { Paint } from '../components/Paint/Paint'
+// import { Loader } from '../components/Loader/Loader'
 
 export const View = () => {
 
-    const [loading, setLoading] = useState(true)
-
-
-
-    const ColorShiftMaterial = shaderMaterial(
-        { uTime: 0, uColorStart: new THREE.Color('lightBlue'), uColorEnd: new THREE.Color('white') },
-        glsl`
-        varying vec2 vUv;
-        void main() {
-            vec4 modelPosition = modelMatrix * vec4(position, 1.0);
-            vec4 viewPosition = viewMatrix * modelPosition;
-            vec4 projectionPosition = projectionMatrix * viewPosition;
-            gl_Position = projectionPosition;
-            vUv = uv;
-        }`,
-        glsl`
-        #pragma glslify: cnoise3 = require(glsl-noise/classic/3d.glsl) 
-        uniform float uTime;
-        uniform vec3 uColorStart;
-        uniform vec3 uColorEnd;
-        varying vec2 vUv;
-        void main() {
-            vec2 displacedUv = vUv + cnoise3(vec3(vUv * 7.0, uTime * 0.1));
-            float strength = cnoise3(vec3(displacedUv * 5.0, uTime * 0.2));
-            float outerGlow = distance(vUv, vec2(0.5)) * 4.0 - 1.4;
-            strength += outerGlow;
-            strength += step(-0.2, strength) * 0.8;
-            strength = clamp(strength, 0.0, 1.0);
-            vec3 color = mix(uColorStart, uColorEnd, strength);
-            gl_FragColor = vec4(color, 1.0);
-        }`,
-    )
-    extend({ ColorShiftMaterial })
-
-    const gallery = useGLTF('../assets/modeles/vr_gallery/scene.gltf')
-    // console.log(gallery.scene.children[0].children[0].children[0].children[0].children[0]);
-
-    //chargement des gltf
-    const LaNuitEtoilee = useGLTF('../assets/textures/LaNuitEtoilee.glb')
-    const soleilLevant = useGLTF('../assets/textures/soleilLevant.glb')
-    const boulevardMontmartre = useGLTF('../assets/textures/boulevardMontmartre.glb')
-    const coucherdesoleilEragny = useGLTF('../assets/textures/coucherdesoleilEragny.glb')
-    const jardinMontmartre = useGLTF('../assets/textures/jardinMontmartre.glb')
-    const pontNeuf = useGLTF('../assets/textures/pontNeuf.glb')
-
-    //chargement des sons
-    const boulevardMontmartreSound = new Audio('../assets/sounds/Boulevard_Montmartre.mp3');
-    const coucherdesoleilEragnySound = new Audio('../assets/sounds/Coucher_du_soleil_a_Eragny.mp3');
-    const jardinMontmartreSound = new Audio('../assets/sounds/Un_jardin_a_montmartre.mp3');
-    const LaNuitEtoileeSound = new Audio('../assets/sounds/La_Nuit_Etoilee.mp3');
-    const pontNeufSound = new Audio('../assets/sounds/Pont_Neuf.mp3');
-    const soleilLevantSound = new Audio('../assets/sounds/Impression_Soleil_Levant.mp3');
-
+    const [loading, setLoading] = useState(false)
 
     //play le son
     useEffect(() => {
-        const tableauSon = [boulevardMontmartreSound, coucherdesoleilEragnySound, jardinMontmartreSound, LaNuitEtoileeSound, pontNeufSound, soleilLevantSound]
         const audioambiance = new Audio('../assets/sounds/ambiance.mp3')
         window.addEventListener('click', () => {
             audioambiance.play()
             audioambiance.volume = 0.08
         })
-        //mettre tout les audio en loop
-        tableauSon.forEach((audio) => {
-            audio.loop = true
-        })
     }, [])
 
-
     //quand tout les gltf sont chargé on enleve le loading
-    useEffect(() => {
-        if (
-            gallery &&
-            LaNuitEtoilee &&
-            soleilLevant &&
-            boulevardMontmartre &&
-            coucherdesoleilEragny &&
-            jardinMontmartre &&
-            pontNeuf
-        ) {
-            setTimeout(() => {
-                setLoading(false)
-            }, 1000)
-        }
-    }, [gallery, LaNuitEtoilee, soleilLevant, boulevardMontmartre, coucherdesoleilEragny, jardinMontmartre, pontNeuf])
+    // useEffect(() => {
+    //     if (
+    //         gallery &&
+    //         LaNuitEtoilee &&
+    //         soleilLevant &&
+    //         boulevardMontmartre &&
+    //         coucherdesoleilEragny &&
+    //         jardinMontmartre &&
+    //         pontNeuf
+    //     ) {
+    //         setTimeout(() => {
+    //             setLoading(false)
+    //         }, 1000)
+    //     }
+    // }, [gallery, LaNuitEtoilee, soleilLevant, boulevardMontmartre, coucherdesoleilEragny, jardinMontmartre, pontNeuf])
 
     //utiliser pointerlockcontrols
     extend({ PointerLockControls })
 
-    function Model(props) {
-        const mymaterial = useRef(null);
-        useFrame((state, delta) => { (mymaterial.current.uTime += delta) })
-        // gallery.scene.children[0].children[0].children[0].children[0].children[0].material
-        return (
-            <>
-                {/* <mesh>
-                    <Sphere position={[0, 1.3, 4]} scale={1}>
-                        <colorShiftMaterial ref={mymaterial} time={1} />
-                    </Sphere>
-                </mesh> */}
-                <primitive
-                    object={gallery.scene}
-                    scale={1}
-                    position={[0, 0, 0]}
-                    rotation={[0, 0, 0]}
-                    onCreated={() => {
-                        console.log("event");
-                    }}
-                    onClick={(event) => {
-                        // console.log(event.object.name)
-                        // console.log(event.eventObject)
-                        // console.log(event.object)
-                        // event.stopPropagation()
-                    }}
-                >
-                        <colorShiftMaterial ref={mymaterial} time={1} />
-                </primitive>
-            </>
-        )
-    }
 
-    const zoom = (target, x, y, z) => {
-        gsap.to(target, { x: x, y: y, z: z })
-    }
-
-    const rotate = (target, x, y, z) => {
-        gsap.to(target, { x: x, y: y, z: z })
-    }
-    
-        
 
 
 
@@ -170,8 +72,8 @@ export const View = () => {
 
 
     return (
-        <Suspense fallback={null}>
-            <Loader loading={loading} />
+        <Suspense fallback={<h1>test</h1>}>
+            {/* <Loader loading={loading} /> */}
             <CrossHair />
             <VRButton />
             <Canvas
@@ -183,237 +85,79 @@ export const View = () => {
                 }}
             >
                 <XR>
-                    {
-                        //pointerlockcontrols
-                        <PointerLockControls
-                            position={[0, 1.5, 0]}
-                            rotation={[0, 0, 0]}
-                            speed={0.05}
-                            onLock={() => console.log('locked')}
-                            onUnlock={() => console.log('unlocked')}
-                        />
-                    }
+                    <PointerLockControls
+                        position={[0, 1.5, 0]}
+                        rotation={[0, 0, 0]}
+                        speed={0.05}
+                        onLock={() => console.log('locked')}
+                        onUnlock={() => console.log('unlocked')}
+                    />
                     <Hands />
                     <boxGeometry />
                     <directionalLight castShadow position={[1, 2, 3]} intensity={2} />
                     <ambientLight intensity={0.5} />
-                    <Model />
-                    <Interactive
-                        onHover={() => {
-                            // LaNuitEtoilee.scene.position.set(-2, 1.5, -4.2)
+                    <Gallery />
 
-                        }}
+                    <Paint
+                        name="LaNuitEtoilee"
+                        basePosition={{ x: -2, y: 1.5, z: -4.8 }}
+                        baseRotation={{ x: 0, y: 0, z: 0 }}
+                        hoverPosition={{ x: -2, y: 1.5, z: -4.2 }}
+                        clickPosition={{ x: -2, y: 1.5, z: -3 }}
+                        clickRotation={{ x: 0, y: 0.5, z: 0 }}
+                        baseScale={0.5}
+                    />
 
-                        onBlur={() => {
-                            LaNuitEtoileeSound.pause()
-                            LaNuitEtoilee.scene.position.set(-2, 1.5, -4.8)
-                        }}
+                    <Paint
+                        name="soleilLevant"
+                        basePosition={{ x: 2, y: 1.5, z: -4.8 }}
+                        baseRotation={{ x: 0, y: 0, z: 0 }}
+                        hoverPosition={{ x: 2, y: 1.5, z: -4.2 }}
+                        clickPosition={{ x: 2, y: 1.5, z: -3 }}
+                        clickRotation={{ x: 0, y: -0.5, z: 0 }}
+                        baseScale={1.93}
+                    />
 
-                        onClick={() => {
-                            LaNuitEtoileeSound.play()
-                        }}
-                    >
-                        <RayGrab>
-                            <primitive
-                                object={LaNuitEtoilee.scene}
-                                scale={0.5}
-                                position={[-2, 1.5, -4.8]}
-                                rotation={[0, 0, 0]}
-                                onPointerOver={(event) => {
-                                    zoom(LaNuitEtoilee.scene.position, -2, 1.5, -4.2);
+                    <Paint
+                        name="boulevardMontmartre"
+                        basePosition={{ x: 4.8, y: 1.5, z: -2 }}
+                        baseRotation={{ x: 0, y: 4.7, z: 0 }}
+                        hoverPosition={{ x: 4.2, y: 1.5, z: -2 }}
+                        clickPosition={{ x: 3, y: 1.5, z: -2 }}
+                        clickRotation={{ x: 0, y: 5.2, z: 0 }}
+                        baseScale={1.55}
+                    />
 
-                                }}
-                                onPointerOut={(event) => {
-                                    LaNuitEtoileeSound.pause()
-                                    zoom(LaNuitEtoilee.scene.position, -2, 1.5, -4.8);
-                                    rotate(LaNuitEtoilee.scene.rotation, 0, 0, 0);
+                    <Paint
+                        name="coucherDeSoleilEragny"
+                        basePosition={{ x: 4.8, y: 1.5, z: 2 }}
+                        baseRotation={{ x: 0, y: 4.7, z: 0 }}
+                        hoverPosition={{ x: 4.2, y: 1.5, z: 2 }}
+                        clickPosition={{ x: 3, y: 1.5, z: 2 }}
+                        clickRotation={{ x: 0, y: 4.2, z: 0 }}
+                        baseScale={1}
+                    />
 
-                                }}
-                                onClick={(event) => {
-                                    rotate(LaNuitEtoilee.scene.rotation, 0, 0.5, 0);
-                                    zoom(LaNuitEtoilee.scene.position, -2, 1.5, -3);
-                                    LaNuitEtoileeSound.play()
-                                    event.stopPropagation()
-                                }}
-                            />
-                        </RayGrab>
-                    </Interactive>
-                    <Interactive
-                        onHover={() => {
-                            soleilLevant.scene.position.set(2, 1.5, -4.2)
-                        }}
+                    <Paint
+                        name="jardinMontmartre"
+                        basePosition={{ x: -4.8, y: 1.5, z: -2 }}
+                        baseRotation={{ x: 0, y: -4.7, z: 0 }}
+                        hoverPosition={{ x: -4.2, y: 1.5, z: -2 }}
+                        clickPosition={{ x: -3, y: 1.5, z: -2 }}
+                        clickRotation={{ x: 0, y: -5.2, z: 0 }}
+                        baseScale={1.28}
+                    />
 
-                        onBlur={() => {
-                            soleilLevantSound.pause()
-                            soleilLevant.scene.position.set(2, 1.5, -4.8)
-                        }}
+                    <Paint
+                        name="pontNeuf"
+                        basePosition={{ x: -4.8, y: 1.5, z: 2 }}
+                        baseRotation={{ x: 0, y: -4.7, z: 0 }}
+                        hoverPosition={{ x: -4.2, y: 1.5, z: 2 }}
+                        clickPosition={{ x: -3, y: 1.5, z: 2 }}
+                        clickRotation={{ x: 0, y: -4.2, z: 0 }}
+                        baseScale={1}
+                    />
 
-                        onClick={() => {
-                            soleilLevantSound.play()
-                        }}
-                    >
-                        <RayGrab>
-                            <primitive
-                                object={soleilLevant.scene}
-                                scale={1.93}
-                                position={[2, 1.5, -4.8]}
-                                rotation={[0, 0, 0]}
-                                onPointerOver={(event) => {
-                                    soleilLevant.scene.position.set(2, 1.5, -4.2)
-                                }}
-                                onPointerOut={(event) => {
-                                    soleilLevantSound.pause()
-                                    soleilLevant.scene.position.set(2, 1.5, -4.8)
-                                }}
-                                onClick={(event) => {
-                                    soleilLevantSound.play()
-                                    event.stopPropagation()
-                                }}
-                            />
-                        </RayGrab>
-                    </Interactive>
-                    <Interactive
-                        onHover={() => {
-                            boulevardMontmartre.scene.position.set(4.2, 1.5, -2)
-                        }}
-
-                        onBlur={() => {
-                            boulevardMontmartreSound.pause()
-                            boulevardMontmartre.scene.position.set(4.8, 1.5, -2)
-                        }}
-
-                        onClick={() => {
-                            boulevardMontmartreSound.play()
-                        }}
-                    >
-                        <RayGrab>
-                            <primitive
-                                object={boulevardMontmartre.scene}
-                                scale={1.55}
-                                position={[4.8, 1.5, -2]}
-                                rotation={[0, 4.7, 0]}
-                                onPointerOver={(event) => {
-                                    boulevardMontmartre.scene.position.set(4.2, 1.5, -2)
-                                }}
-                                onPointerOut={(event) => {
-                                    boulevardMontmartreSound.pause()
-                                    boulevardMontmartre.scene.position.set(4.8, 1.5, -2)
-                                }}
-                                onClick={(event) => {
-                                    boulevardMontmartreSound.play()
-                                    event.stopPropagation()
-                                }}
-                            />
-                        </RayGrab>
-                    </Interactive>
-                    <Interactive
-                        onHover={() => {
-                            coucherdesoleilEragny.scene.position.set(4.2, 1.5, 2)
-                        }}
-
-                        onBlur={() => {
-                            coucherdesoleilEragnySound.pause()
-                            coucherdesoleilEragny.scene.position.set(4.8, 1.5, 2)
-                        }}
-
-                        onClick={() => {
-                            coucherdesoleilEragnySound.play()
-                        }}
-                    >
-                        <RayGrab>
-                            <primitive
-
-                                object={coucherdesoleilEragny.scene}
-                                scale={1}
-
-                                position={[4.8, 1.5, 2]}
-                                rotation={[0, 4.7, 0]}
-
-                                onPointerOver={(event) => {
-                                    coucherdesoleilEragny.scene.position.set(4.2, 1.5, 2)
-                                }}
-                                onPointerOut={(event) => {
-                                    coucherdesoleilEragnySound.pause()
-                                    coucherdesoleilEragny.scene.position.set(4.8, 1.5, 2)
-                                }}
-                                onClick={(event) => {
-                                    coucherdesoleilEragnySound.play()
-                                    event.stopPropagation()
-                                }}
-                            />
-                        </RayGrab>
-                    </Interactive>
-                    <Interactive
-                        onHover={() => {
-                            jardinMontmartre.scene.position.set(-4.2, 1.5, -2)
-                        }}
-
-                        onBlur={() => {
-                            jardinMontmartreSound.pause()
-                            jardinMontmartre.scene.position.set(-4.8, 1.5, -2)
-                        }}
-
-                        onClick={() => {
-                            jardinMontmartreSound.play()
-                        }}
-                    >
-                        <RayGrab>
-                            <primitive
-                                object={jardinMontmartre.scene}
-                                scale={1.28}
-                                position={[-4.8, 1.5, -2]}
-                                rotation={[0, -4.7, 0]}
-                                onPointerOver={(event) => {
-                                    jardinMontmartre.scene.position.set(-4.2, 1.5, -2)
-                                }}
-                                onPointerOut={(event) => {
-                                    jardinMontmartreSound.pause()
-                                    jardinMontmartre.scene.position.set(-4.8, 1.5, -2)
-                                }}
-                                onClick={(event) => {
-                                    jardinMontmartreSound.play()
-                                    event.stopPropagation()
-                                }}
-                            />
-                        </RayGrab>
-                    </Interactive>
-                    <Interactive
-                        onHover={() => {
-                            pontNeuf.scene.position.set(-4.2, 1.5, 2)
-                        }}
-
-                        onBlur={() => {
-                            pontNeufSound.pause()
-                            pontNeuf.scene.position.set(-4.8, 1.5, 2)
-                        }}
-
-                        onClick={() => {
-                            pontNeufSound.play()
-                        }}
-                    >
-                        <RayGrab>
-                            <primitive
-
-                                object={pontNeuf.scene}
-                                scale={1}
-
-                                position={[-4.8, 1.5, 2]}
-                                rotation={[0, -4.7, 0]}
-                                //faut tu fasses l'animation dans les truc normaux et les truc interactif
-                                onPointerOver={(event) => {
-                                    pontNeuf.scene.position.set(-4.2, 1.5, 2)
-                                }}
-                                onPointerOut={(event) => {
-                                    pontNeufSound.pause()
-                                    pontNeuf.scene.position.set(-4.8, 1.5, 2)
-                                }}
-                                onClick={(event) => {
-                                    pontNeufSound.play()
-                                    event.stopPropagation()
-                                }}
-                            />
-                        </RayGrab>
-                    </Interactive>
                     <Controllers
                         rayMaterial={{ color: 'blue' }}
                     />
