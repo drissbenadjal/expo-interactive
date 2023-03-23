@@ -2,12 +2,14 @@ import React, { useEffect, useState, useRef } from 'react';
 import './Loader.css';
 
 export const Loader = ({ loading }) => {
+
     const loaderTopRef = useRef(null);
     const loaderBottomRef = useRef(null);
 
     //recuperer le pourcentage de combien la page est chargé
 
     useEffect(() => {
+        console.log(loading);
         if (!loading) {
             //faire une transition qui fais baisser la height du loader
             for (let i = 0; i < 51; i++) {

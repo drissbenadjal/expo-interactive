@@ -13,7 +13,7 @@ import { Loader } from '../components/Loader/Loader'
 
 export const View = () => {
 
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
 
     const gallery = useGLTF(`./assets/modeles/vr_gallery/scene.gltf`);
     const laNuitEtoilee = useGLTF(`./assets/textures/LaNuitEtoilee.glb`);
