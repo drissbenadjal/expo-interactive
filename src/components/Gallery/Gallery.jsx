@@ -5,7 +5,7 @@ import glsl from 'babel-plugin-glsl/macro'
 import * as THREE from 'three'
 
 const ColorShiftMaterial = shaderMaterial(
-    { uTime: 0, uColorStart: new THREE.Color('lightBlue'), uColorEnd: new THREE.Color('white') },
+    { uTime: 0, uColorStart: new THREE.Color('#686868'), uColorEnd: new THREE.Color('#4B4B4B') },
     glsl`
 varying vec2 vUv;
 void main() {
@@ -35,17 +35,11 @@ void main() {
 extend({ ColorShiftMaterial })
 
 export const Gallery = ({ modele }) => {
-    // console.log(gallery.scene.children[0].children[0].children[0].children[0].children[0]);
-    const mymaterial = useRef(null);
-    useFrame((state, delta) => { (mymaterial.current.uTime += delta) })
-    // gallery.scene.children[0].children[0].children[0].children[0].children[0].material
+    //le shader est appliqué sur le mesh
+    modele.scene.children[0].children[0].children[0].children[0].children[0].material = new ColorShiftMaterial()
+    useFrame((state, delta) => { (modele.scene.children[0].children[0].children[0].children[0].children[0].material.uTime += delta) })
     return (
         <>
-            {/* <mesh>
-                    <Sphere position={[0, 1.3, 4]} scale={1}>
-                        <colorShiftMaterial ref={mymaterial} time={1} />
-                    </Sphere>
-                </mesh> */}
             <primitive
                 object={modele.scene}
                 scale={1}
@@ -60,9 +54,7 @@ export const Gallery = ({ modele }) => {
                     // console.log(event.object)
                     // event.stopPropagation()
                 }}
-            >
-                <colorShiftMaterial ref={mymaterial} time={1} />
-            </primitive>
+            />
         </>
     )
 }

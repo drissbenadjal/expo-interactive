@@ -79,7 +79,7 @@ export const View = () => {
                 <XR>
                     <Hands />
                     <boxGeometry />
-                    <directionalLight castShadow position={[1, 2, 3]} intensity={2} />
+                    <directionalLight castShadow position={[1, 2, 3]} intensity={0.5} />
                     <ambientLight intensity={0.5} />
                     <Gallery modele={gallery} />
 
