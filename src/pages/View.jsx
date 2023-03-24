@@ -81,7 +81,7 @@ export const View = () => {
                     <boxGeometry />
                     <directionalLight castShadow position={[1, 2, 3]} intensity={0.5} />
                     <ambientLight intensity={0.5} />
-                    <Gallery modele={gallery} />
+                    <Gallery modele={gallery} modele2={gallery} />
 
                     <Paint
                         name="LaNuitEtoilee"
