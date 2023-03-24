@@ -101,8 +101,8 @@ export const View = () => {
                         hoverPosition={{ x: 2, y: 1.5, z: -4.2 }}
                         clickPosition={{ x: 2, y: 1.5, z: -3 }}
                         clickRotation={{ x: 0, y: -0.5, z: 0 }}
-                        baseScale={1.93}
-                        paint={soleilLevant}
+                        baseScale={1}
+                        paint={pontNeuf}
                     />
 
                     <Paint
@@ -145,8 +145,8 @@ export const View = () => {
                         hoverPosition={{ x: -4.2, y: 1.5, z: 2 }}
                         clickPosition={{ x: -3, y: 1.5, z: 2 }}
                         clickRotation={{ x: 0, y: -4.2, z: 0 }}
-                        baseScale={1}
-                        paint={pontNeuf}
+                        baseScale={1.93}
+                        paint={soleilLevant}
                     />
 
                     <Controllers
