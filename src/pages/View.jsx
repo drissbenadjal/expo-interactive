@@ -95,7 +95,7 @@ export const View = () => {
                     />
 
                     <Paint
-                        name="soleilLevant"
+                        name="pontNeuf"
                         basePosition={{ x: 2, y: 1.5, z: -4.8 }}
                         baseRotation={{ x: 0, y: 0, z: 0 }}
                         hoverPosition={{ x: 2, y: 1.5, z: -4.2 }}
@@ -139,7 +139,7 @@ export const View = () => {
                     />
 
                     <Paint
-                        name="pontNeuf"
+                        name="soleilLevant"
                         basePosition={{ x: -4.8, y: 1.5, z: 2 }}
                         baseRotation={{ x: 0, y: -4.7, z: 0 }}
                         hoverPosition={{ x: -4.2, y: 1.5, z: 2 }}
