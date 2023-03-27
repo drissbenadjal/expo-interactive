@@ -1,5 +1,5 @@
 import { Interactive, RayGrab } from '@react-three/xr';
-import { zoom, rotate, zoomVR } from '../../utils/animation';
+import { zoom, rotate, zoomVR } from '../Animations/Animations';
 
 
 export const Paint = ({ name, basePosition, baseRotation, hoverPosition, clickPosition, clickRotation, baseScale, paint }) => {
