@@ -1,5 +1,5 @@
 import { Interactive, RayGrab } from '@react-three/xr';
-import { zoom, rotate } from '../Animations/Animations';
+import { zoom, rotate, zoomVR } from '../Animations/Animations';
 import { gsap } from "gsap";
 
 
@@ -9,8 +9,7 @@ export const Paint = ({ name, basePosition, baseRotation, hoverPosition, clickPo
     return (
         <Interactive
             onHover={() => {
-                gsap.to(paint.scene.position, { x: hoverPosition.x, y: hoverPosition.y, z: hoverPosition.z });
-                console.log("hover")
+                zoomVR(paint, hoverPosition.x, hoverPosition.y, hoverPosition.z);
             }}
 
             onBlur={() => {
