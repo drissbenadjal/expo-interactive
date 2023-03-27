@@ -51,7 +51,6 @@ export const View = () => {
   );
   const jardinMontmartre = useGLTF(`./assets/textures/jardinMontmartre.glb`);
   const pontNeuf = useGLTF(`./assets/textures/pontNeuf.glb`);
-
   //play le son
   useEffect(() => {
     const audioambiance = new Audio("../assets/sounds/ambiance.mp3");
@@ -119,25 +118,47 @@ export const View = () => {
           <Gallery modele={gallery} modele2={gallery} />
 
           <Paint
-            name="LaNuitEtoilee"
+            name="soleilLevant"
+            basePosition={{ x: -4.8, y: 1.5, z: 2 }}
+            baseRotation={{ x: 0, y: -4.7, z: 0 }}
+            hoverPosition={{ x: -4.2, y: 1.5, z: 2 }}
+            clickPosition={{ x: -3, y: 1.5, z: 2 }}
+            clickRotation={{ x: 0, y: -4.2, z: 0 }}
+            baseScale={1.93}
+            paint={soleilLevant}
+          />
+
+          <Paint
+            name="pontNeuf"
+            basePosition={{ x: -4.8, y: 1.5, z: -2 }}
+            baseRotation={{ x: 0, y: -4.7, z: 0 }}
+            hoverPosition={{ x: -4.2, y: 1.5, z: -2 }}
+            clickPosition={{ x: -3, y: 1.5, z: -2 }}
+            clickRotation={{ x: 0, y: -5.2, z: 0 }}
+            baseScale={1}
+            paint={pontNeuf}
+          />
+
+          <Paint
+            name="jardinMontmartre"
             basePosition={{ x: -2, y: 1.5, z: -4.8 }}
             baseRotation={{ x: 0, y: 0, z: 0 }}
             hoverPosition={{ x: -2, y: 1.5, z: -4.2 }}
             clickPosition={{ x: -2, y: 1.5, z: -3 }}
             clickRotation={{ x: 0, y: 0.5, z: 0 }}
-            baseScale={0.5}
-            paint={laNuitEtoilee}
+            baseScale={1.28}
+            paint={jardinMontmartre}
           />
 
           <Paint
-            name="pontNeuf"
+            name="coucherDeSoleilEragny"
             basePosition={{ x: 2, y: 1.5, z: -4.8 }}
             baseRotation={{ x: 0, y: 0, z: 0 }}
             hoverPosition={{ x: 2, y: 1.5, z: -4.2 }}
             clickPosition={{ x: 2, y: 1.5, z: -3 }}
             clickRotation={{ x: 0, y: -0.5, z: 0 }}
             baseScale={1}
-            paint={pontNeuf}
+            paint={coucherdesoleilEragny}
           />
 
           <Paint
@@ -152,36 +173,14 @@ export const View = () => {
           />
 
           <Paint
-            name="coucherDeSoleilEragny"
+            name="LaNuitEtoilee"
             basePosition={{ x: 4.8, y: 1.5, z: 2 }}
             baseRotation={{ x: 0, y: 4.7, z: 0 }}
             hoverPosition={{ x: 4.2, y: 1.5, z: 2 }}
             clickPosition={{ x: 3, y: 1.5, z: 2 }}
             clickRotation={{ x: 0, y: 4.2, z: 0 }}
-            baseScale={1}
-            paint={coucherdesoleilEragny}
-          />
-
-          <Paint
-            name="jardinMontmartre"
-            basePosition={{ x: -4.8, y: 1.5, z: -2 }}
-            baseRotation={{ x: 0, y: -4.7, z: 0 }}
-            hoverPosition={{ x: -4.2, y: 1.5, z: -2 }}
-            clickPosition={{ x: -3, y: 1.5, z: -2 }}
-            clickRotation={{ x: 0, y: -5.2, z: 0 }}
-            baseScale={1.28}
-            paint={jardinMontmartre}
-          />
-
-          <Paint
-            name="soleilLevant"
-            basePosition={{ x: -4.8, y: 1.5, z: 2 }}
-            baseRotation={{ x: 0, y: -4.7, z: 0 }}
-            hoverPosition={{ x: -4.2, y: 1.5, z: 2 }}
-            clickPosition={{ x: -3, y: 1.5, z: 2 }}
-            clickRotation={{ x: 0, y: -4.2, z: 0 }}
-            baseScale={1.93}
-            paint={soleilLevant}
+            baseScale={0.5}
+            paint={laNuitEtoilee}
           />
 
           <Controllers rayMaterial={{ color: "black" }} />
