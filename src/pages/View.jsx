@@ -32,10 +32,10 @@ import {
 } from "@react-three/xr";
 import * as THREE from "three";
 
+import { Loader } from "../components/Loader/Loader";
 import { Gallery } from "../components/Gallery/Gallery";
 import { CrossHair } from "../components/CrossHair/CrossHair";
 import { Paint } from "../components/Paint/Paint";
-import { Loader } from "../components/Loader/Loader";
 
 export const View = () => {
   const [loading, setLoading] = useState(true);
@@ -115,6 +115,7 @@ export const View = () => {
           <boxGeometry />
           <directionalLight castShadow position={[1, 2, 3]} intensity={0.5} />
           <ambientLight intensity={0.5} />
+
           <Gallery modele={gallery} modele2={gallery} />
 
           <Paint
