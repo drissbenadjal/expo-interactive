@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Interactive, RayGrab } from "@react-three/xr";
 import { zoom, rotate, zoomVR, rotateVR } from "../Animations/Animations";
 import { gsap } from "gsap";
@@ -13,13 +14,18 @@ export const Paint = ({
   paint,
 }) => {
   const sound = new Audio(`./assets/sounds/${name}.mp3`);
+  const [hovered, setHovered] = useState(false);
 
   return (
     <Interactive
       onHover={() => {
-        zoomVR(paint, hoverPosition.x, hoverPosition.y, hoverPosition.z);
+        if (!hovered) {
+          zoomVR(paint, hoverPosition.x, hoverPosition.y, hoverPosition.z);
+          setHovered(true);
+        }
       }}
       onBlur={() => {
+        setHovered(false);
         sound.pause();
         zoomVR(paint, basePosition.x, basePosition.y, basePosition.z);
         rotateVR(paint, baseRotation.x, baseRotation.y, baseRotation.z);
