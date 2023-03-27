@@ -10,6 +10,7 @@ export const Paint = ({ name, basePosition, baseRotation, hoverPosition, clickPo
         <Interactive
             onHover={() => {
                 gsap.to(paint.scene.position, { x: hoverPosition.x, y: hoverPosition.y, z: hoverPosition.z });
+
             }}
 
             onBlur={() => {
