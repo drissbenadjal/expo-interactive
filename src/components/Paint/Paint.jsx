@@ -1,5 +1,6 @@
 import { Interactive, RayGrab } from '@react-three/xr';
-import { zoom, rotate, zoomVR } from '../Animations/Animations';
+import { zoom, rotate } from '../Animations/Animations';
+import { gsap } from "gsap";
 
 
 export const Paint = ({ name, basePosition, baseRotation, hoverPosition, clickPosition, clickRotation, baseScale, paint }) => {
@@ -8,19 +9,19 @@ export const Paint = ({ name, basePosition, baseRotation, hoverPosition, clickPo
     return (
         <Interactive
             onHover={() => {
-                // zoom(paint.scene.position, hoverPosition.x, hoverPosition.y, hoverPosition.z);
-                zoomVR(paint, hoverPosition.x, hoverPosition.y, hoverPosition.z);
+                gsap.to(paint.scene.position, { x: hoverPosition.x, y: hoverPosition.y, z: hoverPosition.z });
             }}
 
             onBlur={() => {
                 sound.pause()
-                zoomVR(paint, basePosition.x, basePosition.y, basePosition.z);
-                // rotate(paint.scene.rotation, baseRotation.x, baseRotation.y, baseRotation.z);
+                zoom(paint.scene.position, basePosition.x, basePosition.y, basePosition.z);
+                rotate(paint.scene.rotation, baseRotation.x, baseRotation.y, baseRotation.z);
             }}
 
             onSelect={() => {
-                // rotate(paint.scene.rotation, clickRotation.x, clickRotation.y, clickRotation.z);
-                zoomVR(paint, clickPosition.x, clickPosition.y, clickPosition.z);
+
+                rotate(paint.scene.rotation, clickRotation.x, clickRotation.y, clickRotation.z);
+                zoom(paint.scene.position, clickPosition.x, clickPosition.y, clickPosition.z);
                 sound.play()
             }}
         >
