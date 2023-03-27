@@ -16,9 +16,11 @@ export const zoomVR = (target, x, y, z) => {
     const yStep = (y - target.scene.position.y) / framesNumber;
     const zStep = (z - target.scene.position.z) / framesNumber;
 
-    setInterval(() => {
-        target.scene.position.x += xStep;
-        target.scene.position.y += yStep;
-        target.scene.position.z += zStep;
-    }, duration / framesNumber);
+    for (let i = 0; i < framesNumber; i++) {
+        setTimeout(() => {
+            target.scene.position.x += xStep;
+            target.scene.position.y += yStep;
+            target.scene.position.z += zStep;
+        }, i * duration / framesNumber);
+    }
 }
