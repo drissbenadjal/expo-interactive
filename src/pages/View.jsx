@@ -1,35 +1,24 @@
 import "../index.css";
 
 import React, {
-  Suspense,
   useState,
-  useRef,
   useEffect,
-  useLayoutEffect,
 } from "react";
 import {
   Canvas,
-  useFrame,
-  useLoader,
   extend,
-  createRoot,
-  events,
 } from "@react-three/fiber";
 import {
   useGLTF,
   PointerLockControls,
-  shaderMaterial,
-  Sphere,
 } from "@react-three/drei";
 import {
   VRButton,
   XR,
   Controllers,
   Hands,
-  Interactive,
-  RayGrab,
-  useXR,
 } from "@react-three/xr";
+
 import * as THREE from "three";
 
 import { Loader } from "../components/Loader/Loader";
@@ -38,6 +27,7 @@ import { CrossHair } from "../components/CrossHair/CrossHair";
 import { Paint } from "../components/Paint/Paint";
 
 export const View = () => {
+
   const [loading, setLoading] = useState(true);
 
   const gallery = useGLTF(`./assets/modeles/vr_gallery/scene.gltf`);
@@ -59,9 +49,17 @@ export const View = () => {
       audioambiance.volume = 0.08;
       audioambiance.loop = true;
     });
+
+    return () => {
+      window.removeEventListener("click", () => {
+        audioambiance.play();
+        audioambiance.volume = 0.08;
+        audioambiance.loop = true;
+      });
+    };
+
   }, []);
 
-  // quand tout les gltf sont chargé on enleve le loading
   useEffect(() => {
     if (
       gallery &&
@@ -76,23 +74,13 @@ export const View = () => {
         setLoading(false);
       }, 1000);
     }
-  }, [
-    gallery,
-    laNuitEtoilee,
-    soleilLevant,
-    boulevardMontmartre,
-    coucherdesoleilEragny,
-    jardinMontmartre,
-    pontNeuf,
-  ]);
+  }, [boulevardMontmartre, coucherdesoleilEragny, gallery, jardinMontmartre, laNuitEtoilee, pontNeuf, soleilLevant]);
 
-  //utiliser pointerlockcontrols
   extend({ PointerLockControls });
 
   return (
     <>
-      {/* <Suspense fallback={<h1>test</h1>}> */}
-      {/* <Loader loading={loading} /> */}
+      <Loader loading={loading} />
       <CrossHair />
       <VRButton />
       <Canvas
@@ -110,7 +98,13 @@ export const View = () => {
           onLock={() => console.log("locked")}
           onUnlock={() => console.log("unlocked")}
         />
-        <XR>
+        <XR
+          frameRate={72 | 90 | 120}
+          sessionInit={{
+            optionalFeatures: ["local-floor", "bounded-floor"],
+            requiredFeatures: ["hit-test"],
+          }}
+        >
           <Hands />
           <boxGeometry />
           <directionalLight castShadow position={[1, 2, 3]} intensity={0.5} />
@@ -187,7 +181,6 @@ export const View = () => {
           <Controllers rayMaterial={{ color: "black" }} />
         </XR>
       </Canvas>
-      {/* </Suspense> */}
     </>
   );
 };

@@ -1,11 +1,5 @@
-body {
-    margin: 0;
-    padding: 0;
-    background-color: #212121;
-    overflow: hidden;
-}
-
 .loader {
+    pointer-events: none;
     position: absolute;
     z-index: 100000;
     top: 0;
