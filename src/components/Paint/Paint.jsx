@@ -15,15 +15,23 @@ export const Paint = ({
 }) => {
   const sound = new Audio(`./assets/sounds/${name}.mp3`);
 
+  const [isHovered, setIsHovered] = useState(false);
+
   return (
     <Interactive
       onHover={() => {
-        zoomVR(paint, hoverPosition.x, hoverPosition.y, hoverPosition.z);
+        if (!isHovered) {
+          setIsHovered(true);
+          zoomVR(paint, hoverPosition.x, hoverPosition.y, hoverPosition.z);
+        }
       }}
       onBlur={() => {
-        sound.pause();
-        zoomVR(paint, basePosition.x, basePosition.y, basePosition.z);
-        rotateVR(paint, baseRotation.x, baseRotation.y, baseRotation.z);
+        if (isHovered) {
+          setIsHovered(false);
+          sound.pause();
+          zoomVR(paint, basePosition.x, basePosition.y, basePosition.z);
+          rotateVR(paint, baseRotation.x, baseRotation.y, baseRotation.z);
+        }
       }}
       onSelect={() => {
         rotateVR(paint, clickRotation.x, clickRotation.y, clickRotation.z);
