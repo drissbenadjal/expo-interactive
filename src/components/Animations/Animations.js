@@ -23,6 +23,7 @@ export const zoomVR = (target, x, y, z) => {
       target.scene.position.z += zStep;
     }, (i * duration) / framesNumber);
   }
+  return;
 };
 
 export const rotateVR = (target, x, y, z) => {
@@ -40,4 +41,6 @@ export const rotateVR = (target, x, y, z) => {
       target.scene.rotation.z += zStep;
     }, (i * duration) / framesNumber);
   }
+
+  return;
 };
