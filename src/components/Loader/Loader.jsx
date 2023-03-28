@@ -6,10 +6,19 @@ export const Loader = ({ loading }) => {
 
   const loaderTopRef = useRef(null);
   const loaderBottomRef = useRef(null);
+  const loadingTextRef = useRef(null);
+  const dotRef = useRef(null);
+
+  const dot = window.setInterval(function () {
+    if (dotRef.current.innerHTML.length > 2) dotRef.current.innerHTML = "";
+    else dotRef.current.innerHTML += ".";
+  }, 300);
 
   useEffect(() => {
     if (!loading) {
       // Faire une transition qui fait baisser la height du loader
+      loadingTextRef.current.style.opacity = 0;
+
       for (let i = 0; i < 51; i++) {
         setTimeout(() => {
           loaderTopRef.current.style.height = `${50 - i}vh`;
@@ -36,6 +45,9 @@ export const Loader = ({ loading }) => {
         <div className="loader__bottom" ref={loaderBottomRef}>
           <img src="./assets/Images/Logo-bottom.webp" alt="" />
         </div>
+        <p className="loading" ref={loadingTextRef}>
+          Loading <span ref={dotRef}></span>
+        </p>
       </div>
     );
   } else {
