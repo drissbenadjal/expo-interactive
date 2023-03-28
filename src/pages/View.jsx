@@ -82,7 +82,7 @@ export const View = () => {
       <VRButton />
       <Canvas
         gl={{ antialias: true }}
-        camera={{ position: [0, 1.5, 0], fov: 70, rotation: [0, 0, 0] }}
+        camera={{ position: [0, 1.5, 0], fov: 60, rotation: [0, 3.15, 0] }}
         onCreated={({ gl }) => {
           gl.shadowMap.enabled = true;
           gl.shadowMap.type = THREE.PCFSoftShadowMap;
@@ -95,6 +95,7 @@ export const View = () => {
           onLock={() => console.log("locked")}
           onUnlock={() => console.log("unlocked")}
         />
+
         <XR
           frameRate={72 | 90 | 120}
           sessionInit={{
@@ -111,9 +112,9 @@ export const View = () => {
 
           <WelcomeBoard
             modele={welcomeBoard}
-            basePosition={{ x: -4.8, y: 1.5, z: 2 }}
-            baseRotation={{ x: 0, y: -4.7, z: 0 }}
-            baseScale={1.93}
+            basePosition={{ x: 0, y: 1.5, z: 4.7 }}
+            baseRotation={{ x: 0, y: 3.15, z: 0 }}
+            baseScale={1.34}
           />
 
           <Paint
