@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { Interactive, RayGrab } from "@react-three/xr";
+import { Interactive } from "@react-three/xr";
 import { zoom, rotate, zoomVR, rotateVR } from "../Animations/Animations";
-import { gsap } from "gsap";
 
 export const Paint = ({
   name,
@@ -39,7 +38,6 @@ export const Paint = ({
         sound.play();
       }}
     >
-      {/* <RayGrab> */}
       <primitive
         object={paint.scene}
         scale={baseScale}
@@ -85,7 +83,6 @@ export const Paint = ({
           event.stopPropagation();
         }}
       />
-      {/* </RayGrab> */}
     </Interactive>
   );
 };
