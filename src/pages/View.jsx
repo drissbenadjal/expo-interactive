@@ -82,7 +82,7 @@ export const View = () => {
       <VRButton />
       <Canvas
         gl={{ antialias: true }}
-        camera={{ position: [0, 1.5, 0], fov: 60, rotation: [0, 3.15, 0] }}
+        camera={{ position: [0, 1.5, 0], fov: 60, rotation: [0, 0, 0] }}
         onCreated={({ gl }) => {
           gl.shadowMap.enabled = true;
           gl.shadowMap.type = THREE.PCFSoftShadowMap;
@@ -90,7 +90,7 @@ export const View = () => {
       >
         <PointerLockControls
           position={[0, 1.5, 0]}
-          rotation={[0, 3.15, 0]}
+          rotation={[0, 0, 0]}
           speed={0.05}
           onLock={() => console.log("locked")}
           onUnlock={() => console.log("unlocked")}
@@ -112,9 +112,9 @@ export const View = () => {
 
           <WelcomeBoard
             modele={welcomeBoards}
-            basePosition={{ x: 0, y: 1.5, z: 4.7 }}
-            baseRotation={{ x: 0, y: 3.15, z: 0 }}
-            baseScale={1.34}
+            basePosition={{ x: 0, y: 1.49, z: -4.8 }}
+            baseRotation={{ x: 0, y: 0, z: 0 }}
+            baseScale={1.375}
           />
 
           <Paint
@@ -141,22 +141,22 @@ export const View = () => {
 
           <Paint
             name="jardinMontmartre"
-            basePosition={{ x: -2, y: 1.5, z: -4.8 }}
-            baseRotation={{ x: 0, y: 0, z: 0 }}
-            hoverPosition={{ x: -2, y: 1.5, z: -4.2 }}
-            clickPosition={{ x: -2, y: 1.5, z: -3 }}
-            clickRotation={{ x: 0, y: 0.5, z: 0 }}
+            basePosition={{ x: -2, y: 1.5, z: 4.8 }}
+            baseRotation={{ x: 0, y: 3.15, z: 0 }}
+            hoverPosition={{ x: -2, y: 1.5, z: 4.2 }}
+            clickPosition={{ x: -2, y: 1.5, z: 3 }}
+            clickRotation={{ x: 0, y: 2.65, z: 0 }}
             baseScale={1.28}
             paint={jardinMontmartre}
           />
 
           <Paint
             name="coucherDeSoleilEragny"
-            basePosition={{ x: 2, y: 1.5, z: -4.8 }}
-            baseRotation={{ x: 0, y: 0, z: 0 }}
-            hoverPosition={{ x: 2, y: 1.5, z: -4.2 }}
-            clickPosition={{ x: 2, y: 1.5, z: -3 }}
-            clickRotation={{ x: 0, y: -0.5, z: 0 }}
+            basePosition={{ x: 2, y: 1.5, z: 4.8 }}
+            baseRotation={{ x: 0, y: 3.15, z: 0 }}
+            hoverPosition={{ x: 2, y: 1.5, z: 4.2 }}
+            clickPosition={{ x: 2, y: 1.5, z: 3 }}
+            clickRotation={{ x: 0, y: 3.65, z: 0 }}
             baseScale={1}
             paint={coucherdesoleilEragny}
           />
