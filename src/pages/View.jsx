@@ -90,7 +90,7 @@ export const View = () => {
       >
         <PointerLockControls
           position={[0, 1.5, 0]}
-          rotation={[0, 0, 0]}
+          rotation={[0, 3.15, 0]}
           speed={0.05}
           onLock={() => console.log("locked")}
           onUnlock={() => console.log("unlocked")}
