@@ -1,23 +1,9 @@
 import "../index.css";
 
-import React, {
-  useState,
-  useEffect,
-} from "react";
-import {
-  Canvas,
-  extend,
-} from "@react-three/fiber";
-import {
-  useGLTF,
-  PointerLockControls,
-} from "@react-three/drei";
-import {
-  VRButton,
-  XR,
-  Controllers,
-  Hands,
-} from "@react-three/xr";
+import React, { useState, useEffect } from "react";
+import { Canvas, extend } from "@react-three/fiber";
+import { useGLTF, PointerLockControls } from "@react-three/drei";
+import { VRButton, XR, Controllers, Hands } from "@react-three/xr";
 
 import * as THREE from "three";
 
@@ -25,9 +11,9 @@ import { Loader } from "../components/Loader/Loader";
 import { Gallery } from "../components/Gallery/Gallery";
 import { CrossHair } from "../components/CrossHair/CrossHair";
 import { Paint } from "../components/Paint/Paint";
+import { WelcomeBoard } from "../components/WelcomeBoard/WelcomeBoard";
 
 export const View = () => {
-
   const [loading, setLoading] = useState(true);
 
   const gallery = useGLTF(`./assets/modeles/vr_gallery/scene.gltf`);
@@ -41,6 +27,8 @@ export const View = () => {
   );
   const jardinMontmartre = useGLTF(`./assets/textures/jardinMontmartre.glb`);
   const pontNeuf = useGLTF(`./assets/textures/pontNeuf.glb`);
+  const welcomeBoard = useGLTF(`./assets/textures/welcomeBoard.glb`);
+
   //play le son
   useEffect(() => {
     const audioambiance = new Audio("../assets/sounds/ambiance.mp3");
@@ -57,7 +45,6 @@ export const View = () => {
         audioambiance.loop = true;
       });
     };
-
   }, []);
 
   useEffect(() => {
@@ -68,13 +55,23 @@ export const View = () => {
       boulevardMontmartre &&
       coucherdesoleilEragny &&
       jardinMontmartre &&
-      pontNeuf
+      pontNeuf &&
+      welcomeBoard
     ) {
       setTimeout(() => {
         setLoading(false);
       }, 1000);
     }
-  }, [boulevardMontmartre, coucherdesoleilEragny, gallery, jardinMontmartre, laNuitEtoilee, pontNeuf, soleilLevant]);
+  }, [
+    boulevardMontmartre,
+    coucherdesoleilEragny,
+    gallery,
+    jardinMontmartre,
+    laNuitEtoilee,
+    pontNeuf,
+    soleilLevant,
+    welcomeBoard,
+  ]);
 
   extend({ PointerLockControls });
 
@@ -111,6 +108,13 @@ export const View = () => {
           <ambientLight intensity={0.5} />
 
           <Gallery modele={gallery} modele2={gallery} />
+
+          <WelcomeBoard
+            modele={welcomeBoard}
+            basePosition={{ x: -4.8, y: 1.5, z: 2 }}
+            baseRotation={{ x: 0, y: -4.7, z: 0 }}
+            baseScale={1.93}
+          />
 
           <Paint
             name="soleilLevant"
