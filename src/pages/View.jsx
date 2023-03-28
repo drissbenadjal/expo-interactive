@@ -27,7 +27,7 @@ export const View = () => {
   );
   const jardinMontmartre = useGLTF(`./assets/textures/jardinMontmartre.glb`);
   const pontNeuf = useGLTF(`./assets/textures/pontNeuf.glb`);
-  const welcomeBoard = useGLTF(`./assets/textures/welcomeBoard.glb`);
+  const welcomeBoards = useGLTF(`./assets/textures/welcomeBoards.glb`);
 
   //play le son
   useEffect(() => {
@@ -56,7 +56,7 @@ export const View = () => {
       coucherdesoleilEragny &&
       jardinMontmartre &&
       pontNeuf &&
-      welcomeBoard
+      welcomeBoards
     ) {
       setTimeout(() => {
         setLoading(false);
@@ -70,7 +70,7 @@ export const View = () => {
     laNuitEtoilee,
     pontNeuf,
     soleilLevant,
-    welcomeBoard,
+    welcomeBoards,
   ]);
 
   extend({ PointerLockControls });
@@ -111,7 +111,7 @@ export const View = () => {
           <Gallery modele={gallery} modele2={gallery} />
 
           <WelcomeBoard
-            modele={welcomeBoard}
+            modele={welcomeBoards}
             basePosition={{ x: 0, y: 1.5, z: 4.7 }}
             baseRotation={{ x: 0, y: 3.15, z: 0 }}
             baseScale={1.34}
