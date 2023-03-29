@@ -91,6 +91,7 @@ export const View = () => {
           gl.shadowMap.enabled = true;
           gl.shadowMap.type = THREE.PCFSoftShadowMap;
         }}
+        style={{ width: "100vw", height: "100vh" }}
       >
         <PointerLockControls
           position={[0, 1.5, 0]}
