@@ -1,6 +1,4 @@
-import { useState } from "react";
-import { Interactive, RayGrab } from "@react-three/xr";
-import { zoom, rotate, zoomVR, rotateVR } from "../Animations/Animations";
+import { Interactive } from "@react-three/xr";
 
 export const WelcomeBoard = ({
   modele,

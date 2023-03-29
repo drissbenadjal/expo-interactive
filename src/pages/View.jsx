@@ -12,6 +12,7 @@ import { Gallery } from "../components/Gallery/Gallery";
 import { CrossHair } from "../components/CrossHair/CrossHair";
 import { Paint } from "../components/Paint/Paint";
 import { WelcomeBoard } from "../components/WelcomeBoard/WelcomeBoard";
+import { Sky } from "../components/Sky/Sky";
 
 export const View = () => {
   const [loading, setLoading] = useState(true);
@@ -28,6 +29,7 @@ export const View = () => {
   const jardinMontmartre = useGLTF(`./assets/textures/jardinMontmartre.glb`);
   const pontNeuf = useGLTF(`./assets/textures/pontNeuf.glb`);
   const welcomeBoards = useGLTF(`./assets/textures/welcomeBoards.glb`);
+  const sky = useGLTF(`./assets/textures/sky.glb`);
 
   //play le son
   useEffect(() => {
@@ -56,7 +58,8 @@ export const View = () => {
       coucherdesoleilEragny &&
       jardinMontmartre &&
       pontNeuf &&
-      welcomeBoards
+      welcomeBoards &&
+      sky
     ) {
       setTimeout(() => {
         setLoading(false);
@@ -71,6 +74,7 @@ export const View = () => {
     pontNeuf,
     soleilLevant,
     welcomeBoards,
+    sky,
   ]);
 
   extend({ PointerLockControls });
@@ -107,6 +111,8 @@ export const View = () => {
           <boxGeometry />
           <directionalLight castShadow position={[1, 2, 3]} intensity={0.5} />
           <ambientLight intensity={0.5} />
+
+          <Sky sky={sky} />
 
           <Gallery modele={gallery} modele2={gallery} />
 

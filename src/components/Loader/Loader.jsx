@@ -16,7 +16,6 @@ export const Loader = ({ loading }) => {
 
   useEffect(() => {
     if (!loading) {
-      // Faire une transition qui fait baisser la height du loader
       loadingTextRef.current.style.opacity = 0;
 
       for (let i = 0; i < 51; i++) {
