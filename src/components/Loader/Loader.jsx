@@ -17,6 +17,7 @@ export const Loader = ({ loading }) => {
   useEffect(() => {
     if (!loading) {
       loadingTextRef.current.style.opacity = 0;
+      clearInterval(dot);
 
       for (let i = 0; i < 51; i++) {
         setTimeout(() => {
@@ -30,7 +31,6 @@ export const Loader = ({ loading }) => {
       }
 
       setTimeout(() => {
-        window.clearInterval(dot);
         setDisplay(false);
       }, 500);
     }
