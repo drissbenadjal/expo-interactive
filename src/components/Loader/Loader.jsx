@@ -30,6 +30,7 @@ export const Loader = ({ loading }) => {
       }
 
       setTimeout(() => {
+        window.clearInterval(dot);
         setDisplay(false);
       }, 500);
     }
