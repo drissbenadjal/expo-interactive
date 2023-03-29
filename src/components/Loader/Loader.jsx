@@ -9,12 +9,13 @@ export const Loader = ({ loading }) => {
   const loadingTextRef = useRef(null);
   const dotRef = useRef(null);
 
-  const dot = window.setInterval(function () {
-    if (dotRef.current.innerHTML.length > 2) dotRef.current.innerHTML = "";
-    else dotRef.current.innerHTML += ".";
-  }, 300);
-
   useEffect(() => {
+    
+    const dot = window.setInterval(function () {
+      if (dotRef.current.innerHTML.length > 2) dotRef.current.innerHTML = "";
+      else dotRef.current.innerHTML += ".";
+    }, 300);
+
     if (!loading) {
       loadingTextRef.current.style.opacity = 0;
       clearInterval(dot);
