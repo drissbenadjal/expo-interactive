@@ -4,6 +4,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .logo img {
@@ -16,11 +18,13 @@
   bottom: 56px;
   left: 56px;
   color: white;
-  z-index: 11;
+  z-index: 100001;
   font-size: 1.2rem;
   font-weight: 600;
   opacity: 1;
   transition: opacity 0.2s ease;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .loading span {

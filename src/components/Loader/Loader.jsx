@@ -10,8 +10,8 @@ export const Loader = ({ loading }) => {
   const dotRef = useRef(null);
 
   useEffect(() => {
-    
-    const dot = window.setInterval(function () {
+
+    let dot = window.setInterval(() => {
       if (dotRef.current.innerHTML.length > 2) dotRef.current.innerHTML = "";
       else dotRef.current.innerHTML += ".";
     }, 300);
@@ -35,6 +35,11 @@ export const Loader = ({ loading }) => {
         setDisplay(false);
       }, 500);
     }
+
+    return () => {
+      clearInterval(dot);
+    }
+
   }, [loading]);
 
   if (display) {

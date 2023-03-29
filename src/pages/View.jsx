@@ -96,8 +96,6 @@ export const View = () => {
           position={[0, 1.5, 0]}
           rotation={[0, 0, 0]}
           speed={0.05}
-          onLock={() => console.log("locked")}
-          onUnlock={() => console.log("unlocked")}
         />
 
         <XR
