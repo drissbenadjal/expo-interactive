@@ -11,8 +11,6 @@
 .mobile img {
     width: 30%;
     height: 30%;
-    -o-object-fit: cover;
-    object-fit: cover;
 }
 
 .mobile h1 {
