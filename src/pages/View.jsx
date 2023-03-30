@@ -25,7 +25,9 @@ export const View = () => {
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     if (isMobile) {
       setDevice("mobile");
-      setLoading(false);
+      setTimeout(() => {
+        setLoading(false);
+      }, 500);
     } else {
       setDevice("desktop");
     }
