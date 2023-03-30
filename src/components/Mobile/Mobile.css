@@ -5,12 +5,13 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 20px;
+    gap: 5px;
 }
 
 .mobile img {
-    width: 40%;
-    height: 40%;
+    width: 60%;
+    height: 60%;
+    margin-bottom: 20px;
 }
 
 .mobile h1 {
@@ -18,4 +19,24 @@
     font-weight: 600;
     color: #fff;
     width: 85%;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.mobile p {
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: #fff;
+    width: 85%;
+    text-align: center;
+}
+
+.mobile a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 10px 20px;
+    border-radius: 5px;
+    background-color: #4eb2ff;
 }
