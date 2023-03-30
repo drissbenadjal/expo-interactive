@@ -1,0 +1,22 @@
+.mobile {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.mobile img {
+    width: 30%;
+    height: 30%;
+    -o-object-fit: cover;
+    object-fit: cover;
+}
+
+.mobile h1 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #fff;
+}

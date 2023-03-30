@@ -7,6 +7,7 @@ import { VRButton, XR, Controllers, Hands } from "@react-three/xr";
 
 import * as THREE from "three";
 
+import { Mobile } from "../components/Mobile/Mobile";
 import { Loader } from "../components/Loader/Loader";
 import { Gallery } from "../components/Gallery/Gallery";
 import { CrossHair } from "../components/CrossHair/CrossHair";
@@ -20,7 +21,8 @@ export const View = () => {
 
   //regarder si on est sur mobile ou non
   useEffect(() => {
-    if (window.innerWidth < 768) {
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    if (isMobile) {
       setDevice("mobile");
     } else {
       setDevice("desktop");
@@ -93,9 +95,7 @@ export const View = () => {
 
   if (device === "mobile") {
     return (
-      <div className="mobile">
-        <h1>Sorry, this experience is not available on mobile devices</h1>
-      </div>
+      <Mobile />
     );
   } else if (device === "desktop") {
     return (
