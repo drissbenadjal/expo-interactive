@@ -19,17 +19,17 @@ export const View = () => {
 
   const [device, setDevice] = useState("");
 
-  //regarder si on est sur mobile ou non
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     if (isMobile) {
       setDevice("mobile");
+      setLoading(false);
     } else {
       setDevice("desktop");
     }
   }, []);
-
-  const [loading, setLoading] = useState(true);
 
   const gallery = useGLTF(`./assets/modeles/vr_gallery/scene.gltf`);
   const laNuitEtoilee = useGLTF(`./assets/textures/LaNuitEtoilee.glb`);
@@ -64,22 +64,25 @@ export const View = () => {
   }, []);
 
   useEffect(() => {
-    if (
-      gallery &&
-      laNuitEtoilee &&
-      soleilLevant &&
-      boulevardMontmartre &&
-      coucherdesoleilEragny &&
-      jardinMontmartre &&
-      pontNeuf &&
-      welcomeBoards &&
-      sky
-    ) {
-      setTimeout(() => {
-        setLoading(false);
-      }, 1000);
+    if (device === "desktop") {
+      if (
+        gallery &&
+        laNuitEtoilee &&
+        soleilLevant &&
+        boulevardMontmartre &&
+        coucherdesoleilEragny &&
+        jardinMontmartre &&
+        pontNeuf &&
+        welcomeBoards &&
+        sky
+      ) {
+        setTimeout(() => {
+          setLoading(false);
+        }, 1000);
+      }
     }
   }, [
+    device,
     boulevardMontmartre,
     coucherdesoleilEragny,
     gallery,
