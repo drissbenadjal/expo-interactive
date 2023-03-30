@@ -202,7 +202,7 @@ export const View = () => {
             />
 
             <Paint
-              name="laNuitEtoilee"
+              name="nuitEtoilee"
               basePosition={{ x: -4.8, y: 1.5, z: -2 }}
               baseRotation={{ x: 0, y: -4.7, z: 0 }}
               hoverPosition={{ x: -4.2, y: 1.5, z: -2 }}
