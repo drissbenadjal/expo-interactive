@@ -3,7 +3,7 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     gap: 5px;
 }
@@ -33,10 +33,8 @@
 
 .mobile a {
     text-decoration: none;
-    color: #fff;
     font-size: 0.9rem;
     font-weight: 600;
-    padding: 10px 20px;
     border-radius: 5px;
-    background-color: #4eb2ff;
+    color: #4eb2ff;
 }
