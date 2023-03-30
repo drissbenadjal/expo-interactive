@@ -4,25 +4,30 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  -moz-user-select: none;
+  -ms-user-select: none;
   user-select: none;
   -webkit-user-select: none;
 }
 
 .logo img {
   height: 60vh;
+  -o-object-fit: contain;
   object-fit: contain;
 }
 
 .loading {
   position: absolute;
-  bottom: 56px;
-  left: 56px;
+  bottom: 26px;
+  left: 26px;
   color: white;
   z-index: 100001;
   font-size: 1.2rem;
   font-weight: 600;
   opacity: 1;
   transition: opacity 0.2s ease;
+  -moz-user-select: none;
+  -ms-user-select: none;
   user-select: none;
   -webkit-user-select: none;
 }
