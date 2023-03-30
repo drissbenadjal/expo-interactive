@@ -15,6 +15,18 @@ import { WelcomeBoard } from "../components/WelcomeBoard/WelcomeBoard";
 import { Sky } from "../components/Sky/Sky";
 
 export const View = () => {
+
+  const [device, setDevice] = useState("");
+
+  //regarder si on est sur mobile ou non
+  useEffect(() => {
+    if (window.innerWidth < 768) {
+      setDevice("mobile");
+    } else {
+      setDevice("desktop");
+    }
+  }, []);
+
   const [loading, setLoading] = useState(true);
 
   const gallery = useGLTF(`./assets/modeles/vr_gallery/scene.gltf`);
@@ -79,118 +91,126 @@ export const View = () => {
 
   extend({ PointerLockControls });
 
-  return (
-    <>
-      <Loader loading={loading} />
-      <CrossHair />
-      <VRButton />
-      <Canvas
-        gl={{ antialias: true }}
-        camera={{ position: [0, 1.5, 0], fov: 60, rotation: [0, 0, 0] }}
-        onCreated={({ gl }) => {
-          gl.shadowMap.enabled = true;
-          gl.shadowMap.type = THREE.PCFSoftShadowMap;
-        }}
-        style={{ width: "100vw", height: "100vh" }}
-      >
-        <PointerLockControls
-          position={[0, 1.5, 0]}
-          rotation={[0, 0, 0]}
-          speed={0.05}
-        />
-
-        <XR
-          frameRate={72 | 90 | 120}
-          sessionInit={{
-            optionalFeatures: ["local-floor", "bounded-floor"],
-            requiredFeatures: ["hit-test"],
+  if (device === "mobile") {
+    return (
+      <div className="mobile">
+        <h1>Sorry, this experience is not available on mobile devices</h1>
+      </div>
+    );
+  } else if (device === "desktop") {
+    return (
+      <>
+        <Loader loading={loading} />
+        <CrossHair />
+        <VRButton />
+        <Canvas
+          gl={{ antialias: true }}
+          camera={{ position: [0, 1.5, 0], fov: 60, rotation: [0, 0, 0] }}
+          onCreated={({ gl }) => {
+            gl.shadowMap.enabled = true;
+            gl.shadowMap.type = THREE.PCFSoftShadowMap;
           }}
+          style={{ width: "100vw", height: "100vh" }}
         >
-          <Hands />
-          <boxGeometry />
-          <directionalLight castShadow position={[1, 2, 3]} intensity={0.5} />
-          <ambientLight intensity={0.5} />
-
-          <Sky sky={sky} />
-
-          <Gallery modele={gallery} modele2={gallery} />
-
-          <WelcomeBoard
-            modele={welcomeBoards}
-            basePosition={{ x: 0, y: 1.49, z: -4.8 }}
-            baseRotation={{ x: 0, y: 0, z: 0 }}
-            baseScale={1.375}
+          <PointerLockControls
+            position={[0, 1.5, 0]}
+            rotation={[0, 0, 0]}
+            speed={0.05}
           />
 
-          <Paint
-            name="soleilLevant"
-            basePosition={{ x: 4.8, y: 1.5, z: -2 }}
-            baseRotation={{ x: 0, y: 4.7, z: 0 }}
-            hoverPosition={{ x: 4.2, y: 1.5, z: -2 }}
-            clickPosition={{ x: 3, y: 1.5, z: -2 }}
-            clickRotation={{ x: 0, y: 5.2, z: 0 }}
-            baseScale={1.93}
-            paint={soleilLevant}
-          />
+          <XR
+            frameRate={72 | 90 | 120}
+            sessionInit={{
+              optionalFeatures: ["local-floor", "bounded-floor"],
+              requiredFeatures: ["hit-test"],
+            }}
+          >
+            <Hands />
+            <boxGeometry />
+            <directionalLight castShadow position={[1, 2, 3]} intensity={0.5} />
+            <ambientLight intensity={0.5} />
 
-          <Paint
-            name="pontNeuf"
-            basePosition={{ x: 4.8, y: 1.5, z: 2 }}
-            baseRotation={{ x: 0, y: 4.7, z: 0 }}
-            hoverPosition={{ x: 4.2, y: 1.5, z: 2 }}
-            clickPosition={{ x: 3, y: 1.5, z: 2 }}
-            clickRotation={{ x: 0, y: 4.2, z: 0 }}
-            baseScale={1}
-            paint={pontNeuf}
-          />
+            <Sky sky={sky} />
 
-          <Paint
-            name="jardinMontmartre"
-            basePosition={{ x: 2, y: 1.5, z: 4.8 }}
-            baseRotation={{ x: 0, y: 3.15, z: 0 }}
-            hoverPosition={{ x: 2, y: 1.5, z: 4.2 }}
-            clickPosition={{ x: 2, y: 1.5, z: 3 }}
-            clickRotation={{ x: 0, y: 3.65, z: 0 }}
-            baseScale={1.28}
-            paint={jardinMontmartre}
-          />
+            <Gallery modele={gallery} modele2={gallery} />
 
-          <Paint
-            name="coucherDeSoleilEragny"
-            basePosition={{ x: -2, y: 1.5, z: 4.8 }}
-            baseRotation={{ x: 0, y: 3.15, z: 0 }}
-            hoverPosition={{ x: -2, y: 1.5, z: 4.2 }}
-            clickPosition={{ x: -2, y: 1.5, z: 3 }}
-            clickRotation={{ x: 0, y: 2.65, z: 0 }}
-            baseScale={1}
-            paint={coucherdesoleilEragny}
-          />
+            <WelcomeBoard
+              modele={welcomeBoards}
+              basePosition={{ x: 0, y: 1.49, z: -4.8 }}
+              baseRotation={{ x: 0, y: 0, z: 0 }}
+              baseScale={1.375}
+            />
 
-          <Paint
-            name="boulevardMontmartre"
-            basePosition={{ x: -4.8, y: 1.5, z: 2 }}
-            baseRotation={{ x: 0, y: -4.7, z: 0 }}
-            hoverPosition={{ x: -4.2, y: 1.5, z: 2 }}
-            clickPosition={{ x: -3, y: 1.5, z: 2 }}
-            clickRotation={{ x: 0, y: -4.2, z: 0 }}
-            baseScale={1.55}
-            paint={boulevardMontmartre}
-          />
+            <Paint
+              name="soleilLevant"
+              basePosition={{ x: 4.8, y: 1.5, z: -2 }}
+              baseRotation={{ x: 0, y: 4.7, z: 0 }}
+              hoverPosition={{ x: 4.2, y: 1.5, z: -2 }}
+              clickPosition={{ x: 3, y: 1.5, z: -2 }}
+              clickRotation={{ x: 0, y: 5.2, z: 0 }}
+              baseScale={1.93}
+              paint={soleilLevant}
+            />
 
-          <Paint
-            name="laNuitEtoilee"
-            basePosition={{ x: -4.8, y: 1.5, z: -2 }}
-            baseRotation={{ x: 0, y: -4.7, z: 0 }}
-            hoverPosition={{ x: -4.2, y: 1.5, z: -2 }}
-            clickPosition={{ x: -3, y: 1.5, z: -2 }}
-            clickRotation={{ x: 0, y: -5.2, z: 0 }}
-            baseScale={0.5}
-            paint={laNuitEtoilee}
-          />
+            <Paint
+              name="pontNeuf"
+              basePosition={{ x: 4.8, y: 1.5, z: 2 }}
+              baseRotation={{ x: 0, y: 4.7, z: 0 }}
+              hoverPosition={{ x: 4.2, y: 1.5, z: 2 }}
+              clickPosition={{ x: 3, y: 1.5, z: 2 }}
+              clickRotation={{ x: 0, y: 4.2, z: 0 }}
+              baseScale={1}
+              paint={pontNeuf}
+            />
 
-          <Controllers rayMaterial={{ color: "black" }} />
-        </XR>
-      </Canvas>
-    </>
-  );
-};
+            <Paint
+              name="jardinMontmartre"
+              basePosition={{ x: 2, y: 1.5, z: 4.8 }}
+              baseRotation={{ x: 0, y: 3.15, z: 0 }}
+              hoverPosition={{ x: 2, y: 1.5, z: 4.2 }}
+              clickPosition={{ x: 2, y: 1.5, z: 3 }}
+              clickRotation={{ x: 0, y: 3.65, z: 0 }}
+              baseScale={1.28}
+              paint={jardinMontmartre}
+            />
+
+            <Paint
+              name="coucherDeSoleilEragny"
+              basePosition={{ x: -2, y: 1.5, z: 4.8 }}
+              baseRotation={{ x: 0, y: 3.15, z: 0 }}
+              hoverPosition={{ x: -2, y: 1.5, z: 4.2 }}
+              clickPosition={{ x: -2, y: 1.5, z: 3 }}
+              clickRotation={{ x: 0, y: 2.65, z: 0 }}
+              baseScale={1}
+              paint={coucherdesoleilEragny}
+            />
+
+            <Paint
+              name="boulevardMontmartre"
+              basePosition={{ x: -4.8, y: 1.5, z: 2 }}
+              baseRotation={{ x: 0, y: -4.7, z: 0 }}
+              hoverPosition={{ x: -4.2, y: 1.5, z: 2 }}
+              clickPosition={{ x: -3, y: 1.5, z: 2 }}
+              clickRotation={{ x: 0, y: -4.2, z: 0 }}
+              baseScale={1.55}
+              paint={boulevardMontmartre}
+            />
+
+            <Paint
+              name="laNuitEtoilee"
+              basePosition={{ x: -4.8, y: 1.5, z: -2 }}
+              baseRotation={{ x: 0, y: -4.7, z: 0 }}
+              hoverPosition={{ x: -4.2, y: 1.5, z: -2 }}
+              clickPosition={{ x: -3, y: 1.5, z: -2 }}
+              clickRotation={{ x: 0, y: -5.2, z: 0 }}
+              baseScale={0.5}
+              paint={laNuitEtoilee}
+            />
+
+            <Controllers rayMaterial={{ color: "black" }} />
+          </XR>
+        </Canvas>
+      </>
+    );
+  };
+}
